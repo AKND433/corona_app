@@ -1,11 +1,11 @@
-<Window x:Class="WebScraping.MainWindow"
+<Window x:Class="CoronaApp.MainWindow"
         xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-        xmlns:local="clr-namespace:WebScraping"
+        xmlns:local="clr-namespace:CoronaApp"
         mc:Ignorable="d"
-        Title="MainWindow" Height="600" Width="900" Loaded="Window_Loaded">
+        Title="MainWindow" Height="600" Width="900">
     <Grid>
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="*"/>
@@ -61,452 +61,65 @@
             <RowDefinition Height="22*"/>
             <RowDefinition Height="22*"/>
         </Grid.RowDefinitions>
-        <TextBox x:Name="TextBox" Visibility="Visible" Margin="9,10,7.4,14" Grid.ColumnSpan="25" Grid.RowSpan="25" />
-        <TextBlock FontSize="15" x:Name="CasesQuery" Visibility="Collapsed" Height="30" Width="300" Grid.ColumnSpan="12" Margin="22,4.72,20,15.28" Grid.RowSpan="3" Grid.Row="4" />
-        <StackPanel Height="340" Width="600" Grid.ColumnSpan="19" Margin="24.96,10,7.461,13" Grid.RowSpan="16" Grid.Column="3" Grid.Row="9">
+        <TextBox x:Name="TextBox" Grid.ColumnSpan="24" Margin="0,0,0.08,17" Grid.RowSpan="24"/>
+        <TextBlock x:Name="CasesQuery" Visibility="Collapsed" Grid.ColumnSpan="11" Margin="0,0,14,21" Grid.RowSpan="4"/>
+        <Image Source="corona2.jpg" Visibility="Visible" Grid.ColumnSpan="25" Margin="-138,-120,-122.56,-79.094" Grid.RowSpan="25" />
+        <TextBlock Text="    General&#xA;Information" x:Name="GeneralInformation" PreviewMouseDown="GeneralInformation_PreviewMouseDown" MouseEnter="GeneralInformation_MouseEnter" MouseLeave="GeneralInformation_MouseLeave" FontWeight="Bold" Height="70" Width="150" Foreground="Orange" FontSize="25" Grid.ColumnSpan="4" Margin="1,0.831,0,22.169" Grid.RowSpan="4" Grid.Column="4" Grid.Row="4" />
+        <Line x:Name="CurrentConditionsTextBlockUnderLine" Visibility="Collapsed" Height="9" Width="190" X1="10" Y1="1" X2="190" Y2="1" Stroke="Green" StrokeThickness="5" Grid.ColumnSpan="6" Margin="10,0,16,14" Grid.Row="7" Grid.Column="3"/>
+        <TextBlock Text="India" x:Name="India" PreviewMouseDown="India_PreviewMouseDown" MouseEnter="India_MouseEnter" MouseLeave="India_MouseLeave" FontWeight="Bold" Foreground="Orange" Height="40" Width="70" FontSize="25" Grid.ColumnSpan="3" Margin="21.32,0,16.68,6" Grid.RowSpan="2" Grid.Column="11" Grid.Row="4"/>
+        <TextBlock Text="    Other&#xA;Countries" x:Name="OtherCountries" PreviewMouseDown="OtherCountries_PreviewMouseDown" MouseEnter="OtherCountries_MouseEnter" MouseLeave="OtherCountries_MouseLeave" FontWeight="Bold" Height="70" Width="150" Foreground="Orange" FontSize="25" Grid.ColumnSpan="5" Margin="17.32,1,12.68,21" Grid.RowSpan="4" Grid.Column="16" Grid.Row="4" />
+        <Line x:Name="OtherCountriesUnderLine" Visibility="Collapsed" Height="9" Width="180" X1="10" Y1="1" X2="180" Y2="1" Stroke="OrangeRed" StrokeThickness="5" Grid.ColumnSpan="6" Margin="18,0,18,14" Grid.Row="7" Grid.Column="15"/>
+        <Line x:Name="IndiaUnderLine" Visibility="Collapsed" Height="9" Width="100" X1="10" Y1="1" X2="110" Y2="1" Stroke="SkyBlue" StrokeThickness="5" Grid.ColumnSpan="4" Margin="35.96,10,7.412,4" Grid.Row="5" Grid.Column="10"/>
+        <StackPanel x:Name="IndiaStackPanel" Visibility="Collapsed" Height="340" Width="600" Grid.ColumnSpan="19" Margin="24.96,10,7.461,13" Grid.RowSpan="16" Grid.Column="3" Grid.Row="9">
             <StackPanel Orientation="Horizontal">
                 <TextBlock Text="Cases :" Height="40" Width="90" Foreground="Violet" FontSize="30" Grid.ColumnSpan="3" Grid.RowSpan="3" Grid.Column="4" Grid.Row="9" />
-                <TextBlock x:Name="Cases" Height="40" Width="400" FontSize="30" FontWeight="Bold" Foreground="Red" Grid.ColumnSpan="12" Grid.Row="9" Grid.RowSpan="3" Grid.Column="7"/>
+                <TextBlock x:Name="Cases" Height="40" Width="400" FontSize="30" FontWeight="Bold" Foreground="Red" Grid.ColumnSpan="12" Grid.Row="9" Grid.RowSpan="3" Grid.Column="7" Margin="30,0,0,0"/>
             </StackPanel>
             <StackPanel Orientation="Horizontal">
                 <TextBlock Text="Deaths :" Height="40" Width="120" Foreground="Violet" FontSize="30" Grid.ColumnSpan="4" Grid.RowSpan="3" Grid.Column="4" Grid.Row="11" />
-                <TextBlock x:Name="Deaths" Height="40" Width="400" FontSize="30" FontWeight="Bold" Foreground="Orange" Grid.ColumnSpan="12" Grid.Row="11" Grid.RowSpan="3" Grid.Column="7"/>
+                <TextBlock x:Name="Deaths" Height="40" Width="400" FontSize="30" FontWeight="Bold" Foreground="Orange" Grid.ColumnSpan="12" Grid.Row="11" Grid.RowSpan="3" Grid.Column="7" Margin="30,0,0,0"/>
             </StackPanel>
             <StackPanel Orientation="Horizontal">
                 <TextBlock Text="Recovered :" Height="40" Foreground="Violet" Visibility="Visible" Width="160" FontSize="30" Grid.ColumnSpan="5" Grid.RowSpan="3" Grid.Column="4" Grid.Row="13" HorizontalAlignment="Left" />
-                <TextBlock x:Name="Recovered" Height="40" Visibility="Visible" Width="400" FontSize="30" FontWeight="Bold" Foreground="Green" Grid.ColumnSpan="12" Grid.Row="13" Grid.RowSpan="3" Grid.Column="8"/>
+                <TextBlock x:Name="Recovered" Height="40" Visibility="Visible" Width="400" FontSize="30" FontWeight="Bold" Foreground="Green" Grid.ColumnSpan="12" Grid.Row="13" Grid.RowSpan="3" Grid.Column="8" Margin="30,0,0,0"/>
             </StackPanel>
             <StackPanel Orientation="Horizontal">
                 <TextBlock Text="Closed Cases :" FontSize="30" Height="40" Width="200" Foreground="Violet" Grid.ColumnSpan="6" Grid.RowSpan="3" Grid.Row="15" Grid.Column="4"/>
-                <TextBlock x:Name="WhichHadAnOvercome" Visibility="Visible" Foreground="Red" Height="40" Width="400" FontSize="20" Grid.ColumnSpan="12" Grid.RowSpan="3" Grid.Column="9" Grid.Row="15"/>
+                <TextBlock x:Name="WhichHadAnOvercome" Visibility="Visible" Foreground="Red" Height="40" Width="400" FontSize="20" Grid.ColumnSpan="12" Grid.RowSpan="3" Grid.Column="9" Grid.Row="15" Margin="30,0,0,0"/>
             </StackPanel>
             <StackPanel Orientation="Horizontal">
                 <TextBlock Text="Recovered/Discharged :" Visibility="Visible" Foreground="Violet" x:Name="RecoveredAndDischarged" Height="40" Width="320" FontSize="30" Grid.ColumnSpan="10"  Grid.RowSpan="2" Grid.Row="17" Grid.Column="4"/>
-                <TextBlock x:Name="RecoveredPercentage" Foreground="Brown" Visibility="Visible" Height="30" Width="100" FontSize="20" Grid.ColumnSpan="4" Margin="11.92,14,32.08,2" Grid.RowSpan="2" Grid.Row="17" Grid.Column="13"/>
+                <TextBlock x:Name="RecoveredPercentage" Foreground="Brown" Visibility="Visible" Height="30" Width="100" FontSize="20" Grid.ColumnSpan="4" Grid.RowSpan="2" Grid.Row="17" Grid.Column="13" Margin="30,0,0,0"/>
             </StackPanel>
             <StackPanel Orientation="Horizontal">
                 <TextBlock Text="Deaths In Closed Cases :" x:Name="DeathsP" Foreground="Violet" Height="40" Width="330" Visibility="Visible" FontSize="30" Grid.ColumnSpan="10" Grid.RowSpan="2" Grid.Row="19" Grid.Column="4"/>
-                <TextBlock x:Name="DeathPercentage" Height="40" Width="300" Foreground="Orange" Visibility="Visible" FontSize="20" Grid.ColumnSpan="9" Margin="13.92,4,9.76,1" Grid.RowSpan="2" Grid.Row="19" Grid.Column="13"/>
+                <TextBlock x:Name="DeathPercentage" Height="40" Width="300" Foreground="Orange" Visibility="Visible" FontSize="20" Grid.ColumnSpan="9" Grid.RowSpan="2" Grid.Row="19" Grid.Column="13" Margin="30,0,0,0"/>
             </StackPanel>
             <StackPanel Orientation="Horizontal">
                 <TextBlock Text="New Cases :" Visibility="Visible" x:Name="NumberOfNewCases" Foreground="Violet" FontSize="30" Height="40" Width="170" Grid.ColumnSpan="8" Grid.RowSpan="2"/>
-                <TextBlock FontSize="25" Height="35" Width="460" Foreground="Red" Visibility="Visible" x:Name="NumberOfNewCasesValue" Grid.ColumnSpan="12" Grid.RowSpan="3" Grid.Row="1"/>
+                <TextBlock FontSize="25" Height="35" Width="460" Foreground="Red" Visibility="Visible" x:Name="NumberOfNewCasesValue" Grid.ColumnSpan="12" Grid.RowSpan="3" Grid.Row="1" Margin="30,0,0,0"/>
             </StackPanel>
             <StackPanel Orientation="Horizontal">
                 <TextBlock Text="New Deaths :" Visibility="Visible" x:Name="NumberOfNewDeaths" Foreground="Violet" FontSize="25" Height="35" Width="150" Grid.ColumnSpan="8" Grid.RowSpan="2"/>
-                <TextBlock FontSize="25" Height="35" Width="460" Foreground="Orange" Visibility="Visible" x:Name="NumberOfNewDeathsValue" Grid.ColumnSpan="25" Margin="13,7.333,24.44,3.667" Grid.RowSpan="2" Grid.Row="5"/>
+                <TextBlock FontSize="25" Height="35" Width="460" Foreground="Orange" Visibility="Visible" x:Name="NumberOfNewDeathsValue" Grid.ColumnSpan="25" Margin="30,0,0,0" Grid.RowSpan="2" Grid.Row="5"/>
             </StackPanel>
         </StackPanel>
-        <TextBlock Text="Last Updated on :" FontSize="20" Height="30" Width="170" Foreground="White" Grid.ColumnSpan="6" Margin="29.6,21.5,16.08,13" Grid.RowSpan="3" Grid.Row="7" Grid.Column="7"/>
-        <TextBlock x:Name="LastUpdatedOn" FontSize="20" Height="40" Width="430" Grid.ColumnSpan="13" Margin="18.6,16,18.44,13" Grid.RowSpan="3" Grid.Column="12" Grid.Row="7"/>
-        <TextBlock Text="Previous Day's" x:Name="PreviousDay" PreviewMouseDown="PreviousDay_PreviewMouseDown" MouseEnter="PreviousDay_MouseEnter" MouseLeave="PreviousDay_MouseLeave" FontSize="30" Foreground="Chartreuse" Height="40" Width="200" Grid.ColumnSpan="5" Margin="24.539,22,-84.539,7" Grid.RowSpan="3" Grid.Column="20" Grid.Row="13" RenderTransformOrigin="0.5,0.5">
+        <StackPanel x:Name="LastUpdatedStackPanel" Visibility="Collapsed" Orientation="Horizontal" Height="40" Width="560" Grid.ColumnSpan="17" Margin="29,2,21.438,4" Grid.RowSpan="2" Grid.Row="7" Grid.Column="5">
+            <TextBlock Text="Last Updated on :" FontSize="20" Height="40" Width="160" Foreground="White" Grid.ColumnSpan="6" Grid.RowSpan="3" Grid.Row="7" Grid.Column="7"/>
+            <TextBlock x:Name="LastUpdatedOn" FontSize="20" Foreground="SkyBlue" Height="40" Width="400" Grid.ColumnSpan="13" Grid.RowSpan="3" Grid.Column="12" Grid.Row="7"/>
+        </StackPanel>
+        <TextBlock Text="No Recent Activity" x:Name="NoRecentActivity" Foreground="SkyBlue" Visibility="Visible" FontStyle="Italic" Opacity="0.6" FontWeight="ExtraBold" FontSize="45" Height="60" Width="420" Grid.ColumnSpan="12" Margin="10,20,2,12" Grid.RowSpan="4" Grid.Row="11" Grid.Column="7" RenderTransformOrigin="0.5,0.5">
             <TextBlock.RenderTransform>
                 <TransformGroup>
-                    <ScaleTransform/>
-                    <SkewTransform/>
-                    <RotateTransform Angle="90"/>
-                    <TranslateTransform/>
+                    <ScaleTransform ScaleX="1.5" ScaleY="1.5"/>
+                    <SkewTransform AngleX="-9.162"/>
+                    <RotateTransform/>
+                    <TranslateTransform X="4.839"/>
                 </TransformGroup>
             </TextBlock.RenderTransform>
         </TextBlock>
-        <Button Content="More Information" Visibility="Visible" x:Name="TodaysCasesMoreInformationButton" Click="TodaysCasesMoreInformationButton_Click" FontSize="20" Height="40" Width="300" Grid.Column="7" Grid.RowSpan="2" Margin="30.28,0,29.4,6" Grid.ColumnSpan="10"/>
-        <TextBlock FontSize="20" Height="40" Visibility="Collapsed" Width="700" x:Name="TodaysCasesMoreInformationButtonDateAndTime" Grid.ColumnSpan="20" Margin="8,12,11.1,17" Grid.RowSpan="3" Grid.Row="2"/>
-        <TextBlock Text="Since Yesterday" Visibility="Collapsed" FontSize="20" Height="30" Width="150" Grid.ColumnSpan="5" Margin="17,6,12.4,10" Grid.RowSpan="2" Grid.Row="5"/>
-        <TextBlock x:Name="Active" Height="30" Width="500" Visibility="Collapsed" Grid.ColumnSpan="15" Margin="20,18,19.1,21" Grid.RowSpan="3" Grid.Row="6"/>
-        <TextBlock x:Name="Active2" Height="30" Width="500" Visibility="Collapsed" Grid.ColumnSpan="15" Margin="20,10,19.1,6" Grid.RowSpan="2" Grid.Row="8"/>
-        <TextBlock x:Name="Discharged" Height="30" Width="500" Visibility="Collapsed" Grid.ColumnSpan="15" Margin="20,4,19.1,12" Grid.RowSpan="2" Grid.Row="10"/>
-        <TextBlock x:Name="Discharged2" Height="30" Width="500" Visibility="Collapsed" Grid.ColumnSpan="15" Margin="6,16,33.1,0" Grid.RowSpan="2" Grid.Row="14" Grid.Column="1"/>
-        <TextBlock x:Name="Deaths2" Height="30" Width="500" Visibility="Collapsed" Grid.ColumnSpan="15" Margin="20,16,19.1,0" Grid.RowSpan="2" Grid.Row="16"/>
-        <StackPanel Orientation="Vertical" Height="130" Width="500" Background="AliceBlue" x:Name="SomePastMonths" Visibility="Collapsed" Grid.ColumnSpan="21" Margin="28.32,8,28.454,5.927" Grid.RowSpan="15" Grid.Row="8" Grid.Column="1">
-            <StackPanel Orientation="Horizontal" Width="500" Height="45">
-                <TextBlock x:Name="MonthName1" FontSize="15" Height="45" Width="150" Grid.ColumnSpan="7" Grid.RowSpan="3" Grid.Row="16"/>
-                <TextBlock x:Name="NewCases1" FontSize="20" Foreground="Orange" Height="35" Width="150"/>
-                <TextBlock x:Name="NewDeaths1" FontSize="20" Foreground="Red" Height="35" Width="180"/>
-            </StackPanel>
-            <StackPanel Orientation="Horizontal" Width="500" Height="45">
-                <TextBlock x:Name="MonthName2" FontSize="15" Height="45" Width="150" Grid.ColumnSpan="7" Grid.RowSpan="2" Grid.Row="14"/>
-                <TextBlock x:Name="NewCases2" FontSize="20" Foreground="Orange" Height="35" Width="150"/>
-                <TextBlock x:Name="NewDeaths2" FontSize="20" Foreground="Red" Height="35" Width="180"/>
-            </StackPanel>
-            <StackPanel Orientation="Horizontal" Width="500" Height="45">
-                <TextBlock x:Name="MonthName3" FontSize="15" Height="45" Width="150" Grid.ColumnSpan="7" Grid.RowSpan="3" Grid.Row="16"/>
-                <TextBlock x:Name="NewCases3" FontSize="20" Foreground="Orange" Height="35" Width="150"/>
-                <TextBlock x:Name="NewDeaths3" FontSize="20" Foreground="Red" Height="35" Width="180"/>
-            </StackPanel>
-       </StackPanel>
-       <TextBlock Text="India" x:Name="India" Visibility="Visible" PreviewMouseDown="India_PreviewMouseDown" MouseEnter="India_MouseEnter" MouseLeave="India_MouseLeave" FontSize="28" FontWeight="Bold" Foreground="DarkOrange"  Height="42" Width="70" Grid.ColumnSpan="3" Margin="11,14.044,17,12.956" Grid.RowSpan="3" Grid.Column="13" Grid.Row="4"/>
-       <Line x:Name="IndiaUnderLine" Visibility="Collapsed" Height="9" Width="100" X1="10" Y1="1" X2="110" Y2="1" Stroke="Green" StrokeThickness="5" Grid.ColumnSpan="6" Margin="12.667,9,5.333,5" Grid.Row="6" Grid.Column="11"/>
-       <TextBlock Text="   Other&#xA;Countries" x:Name="OtherContries" Visibility="Visible"  PreviewMouseDown="OtherContries_PreviewMouseDown" MouseEnter="OtherContries_MouseEnter" MouseLeave="OtherContries_MouseLeave" FontSize="28" FontWeight="Bold" Foreground="DarkOrange"  Height="80" Width="130" Grid.ColumnSpan="5" Margin="30,10.059,19.333,1.941" Grid.RowSpan="4" Grid.Column="17" Grid.Row="4"/>
-       <Line x:Name="OtherCountriesUnderLine" Visibility="Collapsed" Height="9" Width="180" X1="10" Y1="1" X2="180" Y2="1" Stroke="Green" StrokeThickness="5" Grid.ColumnSpan="6" Margin="2,18.059,33.333,18.941" Grid.Row="7" Grid.Column="17" Grid.RowSpan="2"/>
-       <TextBlock Text="Maharashtra" x:Name="MaharashtraTextBlock" PreviewMouseDown="MaharashtraTextBlock_PreviewMouseDown" MouseEnter="MaharashtraTextBlock_MouseEnter" FontSize="20" Background="Red" Height="30" Width="110" Foreground="White" Grid.ColumnSpan="4" Margin="-60,19,34.056,17" Grid.RowSpan="3" RenderTransformOrigin="0.5,0.5" Grid.Row="7">
-            <TextBlock.RenderTransform>
-                <TransformGroup>
-                    <ScaleTransform/>
-                    <SkewTransform/>
-                    <RotateTransform Angle="-90"/>
-                    <TranslateTransform/>
-                </TransformGroup>
-            </TextBlock.RenderTransform>
-        </TextBlock>
-        <TextBlock x:Name="MaharashtraBackground" Height="550" Width="800"  Background="White" Grid.ColumnSpan="23" Margin="2.32,8,23.534,11.958"  Grid.RowSpan="25" Grid.Column="2"/>
-        <TextBlock x:Name="VirusStrainValue" FontSize="20" Height="40" Visibility="Collapsed" Width="200" Grid.ColumnSpan="7" Margin="21,7,31,22" Grid.RowSpan="3" Grid.Row="1"/>
-        <TextBlock x:Name="FirstCaseDocumentedIn" FontSize="20" Height="40" Width="250" Visibility="Collapsed" Grid.ColumnSpan="8" Margin="21,11,17,18" Grid.RowSpan="3" Grid.Row="3"/>
-        <TextBlock x:Name="StartedFromIn" FontSize="10" Height="40" Width="850" Visibility="Collapsed" Grid.ColumnSpan="8" Margin="21,11,17,18" Grid.RowSpan="3" Grid.Row="5"/>
-        <TextBlock x:Name="CasesConfirmed" FontSize="10" Height="40" Width="250" Visibility="Collapsed" Grid.ColumnSpan="8" Margin="21,19,17,10" Grid.RowSpan="3" Grid.Row="7"/>
-        <TextBlock x:Name="ActiveCases" FontSize="20" Height="40" Width="250" Visibility="Collapsed" Grid.ColumnSpan="8" Margin="21,17,17,12" Grid.RowSpan="3" Grid.Row="9"/>
-      <TextBlock x:Name="DeathsMaha" FontSize="20" Height="40" Width="250" Visibility="Collapsed" Grid.ColumnSpan="8" Margin="21,4,17,0" Grid.RowSpan="2" Grid.Row="20"/>
-        <TextBlock x:Name="DeathRate" FontSize="20" Height="40" Width="250" Visibility="Collapsed" Grid.ColumnSpan="8" Margin="21,2,17,2" Grid.RowSpan="2" Grid.Row="22"/>
+        <TextBlock x:Name="InfoAtTheBeginning" Visibility="Visible" Text="All the information a person should know about COVID-19&#xA;                         Pandemic under one roof!!!" Opacity="0.7" Background="Pink" Foreground="DarkOliveGreen" FontWeight="DemiBold" FontSize="25" Height="70" Width="670" Grid.ColumnSpan="20" Margin="32,2,17.04,20" Grid.Row="15" Grid.RowSpan="4" Grid.Column="3"/>
+        <TextBlock x:Name="SelectATab" Visibility="Visible" Opacity="0.8" Background="DeepPink" Text="Please select any of the above Tabs to start Exploring"  Foreground="White" FontWeight="DemiBold" FontSize="25" Height="35" Width="600" Grid.ColumnSpan="18" Margin="22,3,15.04,6" Grid.Row="21" Grid.RowSpan="2" Grid.Column="4"/>
 
-        <StackPanel Height="550" Width="800" Visibility="Visible" Grid.ColumnSpan="23" Margin="2.639,8,23.538,11.958" Grid.RowSpan="25" Grid.Column="2">
-            <StackPanel Height="20" Width="800" Orientation="Horizontal">
-                <TextBlock x:Name="District1" FontSize="10" FontWeight="ExtraBlack" Height="20" Width="250" Visibility="Visible" Grid.ColumnSpan="8" Grid.RowSpan="3" Grid.Row="1"/>
-                <TextBlock x:Name="TotalCases1" FontSize="10" Height="20" Width="200" Visibility="Visible" Grid.ColumnSpan="8" Grid.RowSpan="3" Grid.Row="1"/>
-                <TextBlock x:Name="Recovered1" FontSize="10" Height="20" Width="200" Visibility="Visible" Grid.ColumnSpan="8" Grid.RowSpan="3" Grid.Row="1"/>
-                <TextBlock x:Name="Deaths1" FontSize="10" Height="20" Width="150" Visibility="Visible" Grid.ColumnSpan="8" Grid.RowSpan="3" Grid.Row="1"/>
-            </StackPanel>
-            <StackPanel Height="20" Width="800" Orientation="Horizontal">
-                <TextBlock x:Name="District2" FontSize="10" Height="20" Width="250" FontWeight="ExtraBlack" Visibility="Visible" Grid.ColumnSpan="8" Grid.RowSpan="3" Grid.Row="1"/>
-                <TextBlock x:Name="TotalCases2" FontSize="10" Height="20" Width="200" Visibility="Visible" Grid.ColumnSpan="8" Grid.RowSpan="3" Grid.Row="1"/>
-                <TextBlock x:Name="Recovered2" FontSize="10" Height="20" Width="200" Visibility="Visible" Grid.ColumnSpan="8" Grid.RowSpan="3" Grid.Row="1"/>
-                <TextBlock x:Name="Deaths2d" FontSize="10" Height="20" Width="150" Visibility="Visible" Grid.ColumnSpan="8" Grid.RowSpan="3" Grid.Row="1"/>
-            </StackPanel>
-            <StackPanel Height="20" Width="800" Orientation="Horizontal">
-                <TextBlock x:Name="District3" FontSize="10" Height="20" Width="250" FontWeight="ExtraBlack" Visibility="Visible" Grid.ColumnSpan="8" Grid.RowSpan="3" Grid.Row="1"/>
-                <TextBlock x:Name="TotalCases3" FontSize="10" Height="20" Width="200" Visibility="Visible" Grid.ColumnSpan="8" Grid.RowSpan="3" Grid.Row="1"/>
-                <TextBlock x:Name="Recovered3" FontSize="10" Height="20" Width="200" Visibility="Visible" Grid.ColumnSpan="8" Grid.RowSpan="3" Grid.Row="1"/>
-                <TextBlock x:Name="Deaths3" FontSize="10" Height="20" Width="150" Visibility="Visible" Grid.ColumnSpan="8" Grid.RowSpan="3" Grid.Row="1"/>
-            </StackPanel>
-            <StackPanel Height="20" Width="800" Orientation="Horizontal">
-                <TextBlock x:Name="District4" FontSize="10" Height="20" Width="250" FontWeight="ExtraBlack" Visibility="Visible" Grid.ColumnSpan="8" Grid.RowSpan="3" Grid.Row="1"/>
-                <TextBlock x:Name="TotalCases4" FontSize="10" Height="20" Width="200" Visibility="Visible" Grid.ColumnSpan="8" Grid.RowSpan="3" Grid.Row="1"/>
-                <TextBlock x:Name="Recovered4" FontSize="10" Height="20" Width="200" Visibility="Visible" Grid.ColumnSpan="8" Grid.RowSpan="3" Grid.Row="1"/>
-                <TextBlock x:Name="Deaths4" FontSize="10" Height="20" Width="150" Visibility="Visible" Grid.ColumnSpan="8" Grid.RowSpan="3" Grid.Row="1"/>
-            </StackPanel>
-            <StackPanel Height="20" Width="800" Orientation="Horizontal">
-                <TextBlock x:Name="District5" FontSize="10" Height="20" Width="250" FontWeight="ExtraBlack" Visibility="Visible" Grid.ColumnSpan="8" Grid.RowSpan="3" Grid.Row="1"/>
-                <TextBlock x:Name="TotalCases5" FontSize="10" Height="20" Width="200" Visibility="Visible" Grid.ColumnSpan="8" Grid.RowSpan="3" Grid.Row="1"/>
-                <TextBlock x:Name="Recovered5" FontSize="10" Height="20" Width="200" Visibility="Visible" Grid.ColumnSpan="8" Grid.RowSpan="3" Grid.Row="1"/>
-                <TextBlock x:Name="Deaths5" FontSize="10" Height="20" Width="150" Visibility="Visible" Grid.ColumnSpan="8" Grid.RowSpan="3" Grid.Row="1"/>
-            </StackPanel>
-            <StackPanel Height="20" Width="800" Orientation="Horizontal">
-                <TextBlock x:Name="District6" FontSize="10" Height="20" Width="250" FontWeight="ExtraBlack" Visibility="Visible" Grid.ColumnSpan="8" Grid.RowSpan="3" Grid.Row="1"/>
-                <TextBlock x:Name="TotalCases6" FontSize="10" Height="20" Width="200" Visibility="Visible" Grid.ColumnSpan="8" Grid.RowSpan="3" Grid.Row="1"/>
-                <TextBlock x:Name="Recovered6" FontSize="10" Height="20" Width="200" Visibility="Visible" Grid.ColumnSpan="8" Grid.RowSpan="3" Grid.Row="1"/>
-                <TextBlock x:Name="Deaths6" FontSize="10" Height="20" Width="150" Visibility="Visible" Grid.ColumnSpan="8" Grid.RowSpan="3" Grid.Row="1"/>
-            </StackPanel>
-            <StackPanel Height="20" Width="800" Orientation="Horizontal">
-                <TextBlock x:Name="District7" FontSize="10" Height="20" Width="250" FontWeight="ExtraBlack" Visibility="Visible" Grid.ColumnSpan="8" Grid.RowSpan="3" Grid.Row="1"/>
-                <TextBlock x:Name="TotalCases7" FontSize="10" Height="20" Width="200" Visibility="Visible" Grid.ColumnSpan="8" Grid.RowSpan="3" Grid.Row="1"/>
-                <TextBlock x:Name="Recovered7" FontSize="10" Height="20" Width="200" Visibility="Visible" Grid.ColumnSpan="8" Grid.RowSpan="3" Grid.Row="1"/>
-                <TextBlock x:Name="Deaths7" FontSize="10" Height="20" Width="150" Visibility="Visible" Grid.ColumnSpan="8" Grid.RowSpan="3" Grid.Row="1"/>
-            </StackPanel>
-            <StackPanel Height="20" Width="800" Orientation="Horizontal">
-                <TextBlock x:Name="District8" FontSize="10" Height="20" Width="250" FontWeight="ExtraBlack" Visibility="Visible" Grid.ColumnSpan="8" Grid.RowSpan="3" Grid.Row="1"/>
-                <TextBlock x:Name="TotalCases8" FontSize="10" Height="20" Width="200" Visibility="Visible" Grid.ColumnSpan="8" Grid.RowSpan="3" Grid.Row="1"/>
-                <TextBlock x:Name="Recovered8" FontSize="10" Height="20" Width="200" Visibility="Visible" Grid.ColumnSpan="8" Grid.RowSpan="3" Grid.Row="1"/>
-                <TextBlock x:Name="Deaths8" FontSize="10" Height="20" Width="150" Visibility="Visible" Grid.ColumnSpan="8" Grid.RowSpan="3" Grid.Row="1"/>
-            </StackPanel>
-            <StackPanel Height="20" Width="800" Orientation="Horizontal">
-                <TextBlock x:Name="District9" FontSize="10" Height="20" Width="250" FontWeight="ExtraBlack" Visibility="Visible" Grid.ColumnSpan="8" Grid.RowSpan="3" Grid.Row="1"/>
-                <TextBlock x:Name="TotalCases9" FontSize="10" Height="20" Width="200" Visibility="Visible" Grid.ColumnSpan="8" Grid.RowSpan="3" Grid.Row="1"/>
-                <TextBlock x:Name="Recovered9" FontSize="10" Height="20" Width="200" Visibility="Visible" Grid.ColumnSpan="8" Grid.RowSpan="3" Grid.Row="1"/>
-                <TextBlock x:Name="Deaths9" FontSize="10" Height="20" Width="150" Visibility="Visible" Grid.ColumnSpan="8" Grid.RowSpan="3" Grid.Row="1"/>
-            </StackPanel>
-            <StackPanel Height="20" Width="800" Orientation="Horizontal">
-                <TextBlock x:Name="District10" FontSize="10" Height="20" Width="250" FontWeight="ExtraBlack" Visibility="Visible" Grid.ColumnSpan="8" Grid.RowSpan="3" Grid.Row="1"/>
-                <TextBlock x:Name="TotalCases10" FontSize="10" Height="20" Width="200" Visibility="Visible" Grid.ColumnSpan="8" Grid.RowSpan="3" Grid.Row="1"/>
-                <TextBlock x:Name="Recovered10" FontSize="10" Height="20" Width="200" Visibility="Visible" Grid.ColumnSpan="8" Grid.RowSpan="3" Grid.Row="1"/>
-                <TextBlock x:Name="Deaths10" FontSize="10" Height="20" Width="150" Visibility="Visible" Grid.ColumnSpan="8" Grid.RowSpan="3" Grid.Row="1"/>
-            </StackPanel>
-            <StackPanel Height="20" Width="800" Orientation="Horizontal">
-                <TextBlock x:Name="District11" FontSize="10" Height="20" Width="250" FontWeight="ExtraBlack" Visibility="Visible" Grid.ColumnSpan="8" Grid.RowSpan="3" Grid.Row="1"/>
-                <TextBlock x:Name="TotalCases11" FontSize="10" Height="20" Width="200" Visibility="Visible" Grid.ColumnSpan="8" Grid.RowSpan="3" Grid.Row="1"/>
-                <TextBlock x:Name="Recovered11" FontSize="10" Height="20" Width="200" Visibility="Visible" Grid.ColumnSpan="8" Grid.RowSpan="3" Grid.Row="1"/>
-                <TextBlock x:Name="Deaths11" FontSize="10" Height="20" Width="150" Visibility="Visible" Grid.ColumnSpan="8" Grid.RowSpan="3" Grid.Row="1"/>
-            </StackPanel>
-            <StackPanel Height="20" Width="800" Orientation="Horizontal">
-                <TextBlock x:Name="District12" FontSize="10" Height="20" Width="250" FontWeight="ExtraBlack" Visibility="Visible" Grid.ColumnSpan="8" Grid.RowSpan="3" Grid.Row="1"/>
-                <TextBlock x:Name="TotalCases12" FontSize="10" Height="20" Width="200" Visibility="Visible" Grid.ColumnSpan="8" Grid.RowSpan="3" Grid.Row="1"/>
-                <TextBlock x:Name="Recovered12" FontSize="10" Height="20" Width="200" Visibility="Visible" Grid.ColumnSpan="8" Grid.RowSpan="3" Grid.Row="1"/>
-                <TextBlock x:Name="Deaths12" FontSize="10" Height="20" Width="150" Visibility="Visible" Grid.ColumnSpan="8" Grid.RowSpan="3" Grid.Row="1"/>
-            </StackPanel>
-            <StackPanel Height="20" Width="800" Orientation="Horizontal">
-                <TextBlock x:Name="District13" FontSize="10" Height="20" Width="250" FontWeight="ExtraBlack" Visibility="Visible" Grid.ColumnSpan="8" Grid.RowSpan="3" Grid.Row="1"/>
-                <TextBlock x:Name="TotalCases13" FontSize="10" Height="20" Width="200" Visibility="Visible" Grid.ColumnSpan="8" Grid.RowSpan="3" Grid.Row="1"/>
-                <TextBlock x:Name="Recovered13" FontSize="10" Height="20" Width="200" Visibility="Visible" Grid.ColumnSpan="8" Grid.RowSpan="3" Grid.Row="1"/>
-                <TextBlock x:Name="Deaths13" FontSize="10" Height="20" Width="150" Visibility="Visible" Grid.ColumnSpan="8" Grid.RowSpan="3" Grid.Row="1"/>
-            </StackPanel>
-            <StackPanel Height="20" Width="800" Orientation="Horizontal">
-                <TextBlock x:Name="District14" FontSize="10" Height="20" Width="250" FontWeight="ExtraBlack" Visibility="Visible" Grid.ColumnSpan="8" Grid.RowSpan="3" Grid.Row="1"/>
-                <TextBlock x:Name="TotalCases14" FontSize="10" Height="20" Width="200" Visibility="Visible" Grid.ColumnSpan="8" Grid.RowSpan="3" Grid.Row="1"/>
-                <TextBlock x:Name="Recovered14" FontSize="10" Height="20" Width="200" Visibility="Visible" Grid.ColumnSpan="8" Grid.RowSpan="3" Grid.Row="1"/>
-                <TextBlock x:Name="Deaths14" FontSize="10" Height="20" Width="150" Visibility="Visible" Grid.ColumnSpan="8" Grid.RowSpan="3" Grid.Row="1"/>
-            </StackPanel>
-            <StackPanel Height="20" Width="800" Orientation="Horizontal">
-                <TextBlock x:Name="District15" FontSize="10" Height="20" Width="250" FontWeight="ExtraBlack" Visibility="Visible" Grid.ColumnSpan="8" Grid.RowSpan="3" Grid.Row="1"/>
-                <TextBlock x:Name="TotalCases15" FontSize="10" Height="20" Width="200" Visibility="Visible" Grid.ColumnSpan="8" Grid.RowSpan="3" Grid.Row="1"/>
-                <TextBlock x:Name="Recovered15" FontSize="10" Height="20" Width="200" Visibility="Visible" Grid.ColumnSpan="8" Grid.RowSpan="3" Grid.Row="1"/>
-                <TextBlock x:Name="Deaths15" FontSize="10" Height="20" Width="150" Visibility="Visible" Grid.ColumnSpan="8" Grid.RowSpan="3" Grid.Row="1"/>
-            </StackPanel>
-            <StackPanel Height="20" Width="800" Orientation="Horizontal">
-                <TextBlock x:Name="District16" FontSize="10" Height="20" Width="250" FontWeight="ExtraBlack" Visibility="Visible" Grid.ColumnSpan="8" Grid.RowSpan="3" Grid.Row="1"/>
-                <TextBlock x:Name="TotalCases16" FontSize="10" Height="20" Width="200" Visibility="Visible" Grid.ColumnSpan="8" Grid.RowSpan="3" Grid.Row="1"/>
-                <TextBlock x:Name="Recovered16" FontSize="10" Height="20" Width="200" Visibility="Visible" Grid.ColumnSpan="8" Grid.RowSpan="3" Grid.Row="1"/>
-                <TextBlock x:Name="Deaths16" FontSize="10" Height="20" Width="150" Visibility="Visible" Grid.ColumnSpan="8" Grid.RowSpan="3" Grid.Row="1"/>
-            </StackPanel>
-            <StackPanel Height="20" Width="800" Orientation="Horizontal">
-                <TextBlock x:Name="District17" FontSize="10" Height="20" Width="250" FontWeight="ExtraBlack" Visibility="Visible" Grid.ColumnSpan="8" Grid.RowSpan="3" Grid.Row="1"/>
-                <TextBlock x:Name="TotalCases17" FontSize="10" Height="20" Width="200" Visibility="Visible" Grid.ColumnSpan="8" Grid.RowSpan="3" Grid.Row="1"/>
-                <TextBlock x:Name="Recovered17" FontSize="10" Height="20" Width="200" Visibility="Visible" Grid.ColumnSpan="8" Grid.RowSpan="3" Grid.Row="1"/>
-                <TextBlock x:Name="Deaths17" FontSize="10" Height="20" Width="150" Visibility="Visible" Grid.ColumnSpan="8" Grid.RowSpan="3" Grid.Row="1"/>
-            </StackPanel>
-            <StackPanel Height="20" Width="800" Orientation="Horizontal">
-                <TextBlock x:Name="District18" FontSize="10" Height="20" Width="250" FontWeight="ExtraBlack" Visibility="Visible" Grid.ColumnSpan="8" Grid.RowSpan="3" Grid.Row="1"/>
-                <TextBlock x:Name="TotalCases18" FontSize="10" Height="20" Width="200" Visibility="Visible" Grid.ColumnSpan="8" Grid.RowSpan="3" Grid.Row="1"/>
-                <TextBlock x:Name="Recovered18" FontSize="10" Height="20" Width="200" Visibility="Visible" Grid.ColumnSpan="8" Grid.RowSpan="3" Grid.Row="1"/>
-                <TextBlock x:Name="Deaths18" FontSize="10" Height="20" Width="150" Visibility="Visible" Grid.ColumnSpan="8" Grid.RowSpan="3" Grid.Row="1"/>
-            </StackPanel>
-            <StackPanel Height="20" Width="800" Orientation="Horizontal">
-                <TextBlock x:Name="District19" FontSize="10" Height="20" Width="250" FontWeight="ExtraBlack" Visibility="Visible" Grid.ColumnSpan="8" Grid.RowSpan="3" Grid.Row="1"/>
-                <TextBlock x:Name="TotalCases19" FontSize="10" Height="20" Width="200" Visibility="Visible" Grid.ColumnSpan="8" Grid.RowSpan="3" Grid.Row="1"/>
-                <TextBlock x:Name="Recovered19" FontSize="10" Height="20" Width="200" Visibility="Visible" Grid.ColumnSpan="8" Grid.RowSpan="3" Grid.Row="1"/>
-                <TextBlock x:Name="Deaths19" FontSize="10" Height="20" Width="150" Visibility="Visible" Grid.ColumnSpan="8" Grid.RowSpan="3" Grid.Row="1"/>
-            </StackPanel>
-            <StackPanel Height="20" Width="800" Orientation="Horizontal">
-                <TextBlock x:Name="District20" FontSize="10" Height="20" Width="250" FontWeight="ExtraBlack" Visibility="Visible" Grid.ColumnSpan="8" Grid.RowSpan="3" Grid.Row="1"/>
-                <TextBlock x:Name="TotalCases20" FontSize="10" Height="20" Width="200" Visibility="Visible" Grid.ColumnSpan="8" Grid.RowSpan="3" Grid.Row="1"/>
-                <TextBlock x:Name="Recovered20" FontSize="10" Height="20" Width="200" Visibility="Visible" Grid.ColumnSpan="8" Grid.RowSpan="3" Grid.Row="1"/>
-                <TextBlock x:Name="Deaths20" FontSize="10" Height="20" Width="150" Visibility="Visible" Grid.ColumnSpan="8" Grid.RowSpan="3" Grid.Row="1"/>
-            </StackPanel>
-            <StackPanel Height="20" Width="800" Orientation="Horizontal">
-                <TextBlock x:Name="District21" FontSize="10" Height="20" Width="250" FontWeight="ExtraBlack" Visibility="Visible" Grid.ColumnSpan="8" Grid.RowSpan="3" Grid.Row="1"/>
-                <TextBlock x:Name="TotalCases21" FontSize="10" Height="20" Width="200" Visibility="Visible" Grid.ColumnSpan="8" Grid.RowSpan="3" Grid.Row="1"/>
-                <TextBlock x:Name="Recovered21" FontSize="10" Height="20" Width="200" Visibility="Visible" Grid.ColumnSpan="8" Grid.RowSpan="3" Grid.Row="1"/>
-                <TextBlock x:Name="Deaths21" FontSize="10" Height="20" Width="150" Visibility="Visible" Grid.ColumnSpan="8" Grid.RowSpan="3" Grid.Row="1"/>
-            </StackPanel>
-            <StackPanel Height="20" Width="800" Orientation="Horizontal">
-                <TextBlock x:Name="District22" FontSize="10" Height="20" Width="250" FontWeight="ExtraBlack" Visibility="Visible" Grid.ColumnSpan="8" Grid.RowSpan="3" Grid.Row="1"/>
-                <TextBlock x:Name="TotalCases22" FontSize="10" Height="20" Width="200" Visibility="Visible" Grid.ColumnSpan="8" Grid.RowSpan="3" Grid.Row="1"/>
-                <TextBlock x:Name="Recovered22" FontSize="10" Height="20" Width="200" Visibility="Visible" Grid.ColumnSpan="8" Grid.RowSpan="3" Grid.Row="1"/>
-                <TextBlock x:Name="Deaths22" FontSize="10" Height="20" Width="150" Visibility="Visible" Grid.ColumnSpan="8" Grid.RowSpan="3" Grid.Row="1"/>
-            </StackPanel>
-            <StackPanel Height="20" Width="800" Orientation="Horizontal">
-                <TextBlock x:Name="District23" FontSize="10" Height="20" Width="250" FontWeight="ExtraBlack" Visibility="Visible" Grid.ColumnSpan="8" Grid.RowSpan="3" Grid.Row="1"/>
-                <TextBlock x:Name="TotalCases23" FontSize="10" Height="20" Width="200" Visibility="Visible" Grid.ColumnSpan="8" Grid.RowSpan="3" Grid.Row="1"/>
-                <TextBlock x:Name="Recovered23" FontSize="10" Height="20" Width="200" Visibility="Visible" Grid.ColumnSpan="8" Grid.RowSpan="3" Grid.Row="1"/>
-                <TextBlock x:Name="Deaths23" FontSize="10" Height="20" Width="150" Visibility="Visible" Grid.ColumnSpan="8" Grid.RowSpan="3" Grid.Row="1"/>
-            </StackPanel>
-            <StackPanel Height="20" Width="800" Orientation="Horizontal">
-                <TextBlock x:Name="District24" FontSize="10" Height="20" Width="250" FontWeight="ExtraBlack" Visibility="Visible" Grid.ColumnSpan="8" Grid.RowSpan="3" Grid.Row="1"/>
-                <TextBlock x:Name="TotalCases24" FontSize="10" Height="20" Width="200" Visibility="Visible" Grid.ColumnSpan="8" Grid.RowSpan="3" Grid.Row="1"/>
-                <TextBlock x:Name="Recovered24" FontSize="10" Height="20" Width="200" Visibility="Visible" Grid.ColumnSpan="8" Grid.RowSpan="3" Grid.Row="1"/>
-                <TextBlock x:Name="Deaths24" FontSize="10" Height="20" Width="150" Visibility="Visible" Grid.ColumnSpan="8" Grid.RowSpan="3" Grid.Row="1"/>
-            </StackPanel>
-            <StackPanel Height="20" Width="800" Orientation="Horizontal">
-                <TextBlock x:Name="District25" FontSize="10" Height="20" Width="250" FontWeight="ExtraBlack" Visibility="Visible" Grid.ColumnSpan="8" Grid.RowSpan="3" Grid.Row="1"/>
-                <TextBlock x:Name="TotalCases25" FontSize="10" Height="20" Width="200" Visibility="Visible" Grid.ColumnSpan="8" Grid.RowSpan="3" Grid.Row="1"/>
-                <TextBlock x:Name="Recovered25" FontSize="10" Height="20" Width="200" Visibility="Visible" Grid.ColumnSpan="8" Grid.RowSpan="3" Grid.Row="1"/>
-                <TextBlock x:Name="Deaths25" FontSize="10" Height="20" Width="150" Visibility="Visible" Grid.ColumnSpan="8" Grid.RowSpan="3" Grid.Row="1"/>
-            </StackPanel>
-            <StackPanel Height="20" Width="800" Orientation="Horizontal">
-                <TextBlock x:Name="District26" FontSize="10" Height="20" Width="250" FontWeight="ExtraBlack" Visibility="Visible" Grid.ColumnSpan="8" Grid.RowSpan="3" Grid.Row="1"/>
-                <TextBlock x:Name="TotalCases26" FontSize="10" Height="20" Width="200" Visibility="Visible" Grid.ColumnSpan="8" Grid.RowSpan="3" Grid.Row="1"/>
-                <TextBlock x:Name="Recovered26" FontSize="10" Height="20" Width="200" Visibility="Visible" Grid.ColumnSpan="8" Grid.RowSpan="3" Grid.Row="1"/>
-                <TextBlock x:Name="Deaths26" FontSize="10" Height="20" Width="150" Visibility="Visible" Grid.ColumnSpan="8" Grid.RowSpan="3" Grid.Row="1"/>
-            </StackPanel>
-        </StackPanel>
-   
-   <StackPanel Height="550" Width="800" Visibility="Collapsed" Grid.ColumnSpan="23" Margin="8,-28,18.174,3.956" Grid.RowSpan="23">
-            <StackPanel Height="20" Width="800" Orientation="Horizontal">
-                <TextBlock x:Name="District27" FontSize="10" Height="20" Width="250" FontWeight="ExtraBlack" Visibility="Visible" Grid.ColumnSpan="8" Grid.RowSpan="3" Grid.Row="1"/>
-                <TextBlock x:Name="TotalCases27" FontSize="10" Height="20" Width="200" Visibility="Visible" Grid.ColumnSpan="8" Grid.RowSpan="3" Grid.Row="1"/>
-                <TextBlock x:Name="Recovered27" FontSize="10" Height="20" Width="200" Visibility="Visible" Grid.ColumnSpan="8" Grid.RowSpan="3" Grid.Row="1"/>
-                <TextBlock x:Name="Deaths27" FontSize="10" Height="20" Width="150" Visibility="Visible" Grid.ColumnSpan="8" Grid.RowSpan="3" Grid.Row="1"/>
-            </StackPanel>
-            <StackPanel Height="20" Width="800" Orientation="Horizontal">
-                <TextBlock x:Name="District28" FontSize="10" Height="20" Width="250" FontWeight="ExtraBlack" Visibility="Visible" Grid.ColumnSpan="8" Grid.RowSpan="3" Grid.Row="1"/>
-                <TextBlock x:Name="TotalCases28" FontSize="10" Height="20" Width="200" Visibility="Visible" Grid.ColumnSpan="8" Grid.RowSpan="3" Grid.Row="1"/>
-                <TextBlock x:Name="Recovered28" FontSize="10" Height="20" Width="200" Visibility="Visible" Grid.ColumnSpan="8" Grid.RowSpan="3" Grid.Row="1"/>
-                <TextBlock x:Name="Deaths28" FontSize="10" Height="20" Width="150" Visibility="Visible" Grid.ColumnSpan="8" Grid.RowSpan="3" Grid.Row="1"/>
-            </StackPanel>
-            <StackPanel Height="20" Width="800" Orientation="Horizontal">
-                <TextBlock x:Name="District29" FontSize="10" Height="20" Width="250" FontWeight="ExtraBlack" Visibility="Visible" Grid.ColumnSpan="8" Grid.RowSpan="3" Grid.Row="1"/>
-                <TextBlock x:Name="TotalCases29" FontSize="10" Height="20" Width="200" Visibility="Visible" Grid.ColumnSpan="8" Grid.RowSpan="3" Grid.Row="1"/>
-                <TextBlock x:Name="Recovered29" FontSize="10" Height="20" Width="200" Visibility="Visible" Grid.ColumnSpan="8" Grid.RowSpan="3" Grid.Row="1"/>
-                <TextBlock x:Name="Deaths29" FontSize="10" Height="20" Width="150" Visibility="Visible" Grid.ColumnSpan="8" Grid.RowSpan="3" Grid.Row="1"/>
-            </StackPanel>
-            <StackPanel Height="20" Width="800" Orientation="Horizontal">
-                <TextBlock x:Name="District30" FontSize="10" Height="20" Width="250" FontWeight="ExtraBlack" Visibility="Visible" Grid.ColumnSpan="8" Grid.RowSpan="3" Grid.Row="1"/>
-                <TextBlock x:Name="TotalCases30" FontSize="10" Height="20" Width="200" Visibility="Visible" Grid.ColumnSpan="8" Grid.RowSpan="3" Grid.Row="1"/>
-                <TextBlock x:Name="Recovered30" FontSize="10" Height="20" Width="200" Visibility="Visible" Grid.ColumnSpan="8" Grid.RowSpan="3" Grid.Row="1"/>
-                <TextBlock x:Name="Deaths30" FontSize="10" Height="20" Width="150" Visibility="Visible" Grid.ColumnSpan="8" Grid.RowSpan="3" Grid.Row="1"/>
-            </StackPanel>
-            <StackPanel Height="20" Width="800" Orientation="Horizontal">
-                <TextBlock x:Name="District31" FontSize="10" Height="20" Width="250" FontWeight="ExtraBlack" Visibility="Visible" Grid.ColumnSpan="8" Grid.RowSpan="3" Grid.Row="1"/>
-                <TextBlock x:Name="TotalCases31" FontSize="10" Height="20" Width="200" Visibility="Visible" Grid.ColumnSpan="8" Grid.RowSpan="3" Grid.Row="1"/>
-                <TextBlock x:Name="Recovered31" FontSize="10" Height="20" Width="200" Visibility="Visible" Grid.ColumnSpan="8" Grid.RowSpan="3" Grid.Row="1"/>
-                <TextBlock x:Name="Deaths31" FontSize="10" Height="20" Width="150" Visibility="Visible" Grid.ColumnSpan="8" Grid.RowSpan="3" Grid.Row="1"/>
-            </StackPanel>
-            <StackPanel Height="20" Width="800" Orientation="Horizontal">
-                <TextBlock x:Name="District32" FontSize="10" Height="20" Width="250" FontWeight="ExtraBlack" Visibility="Visible" Grid.ColumnSpan="8" Grid.RowSpan="3" Grid.Row="1"/>
-                <TextBlock x:Name="TotalCases32" FontSize="10" Height="20" Width="200" Visibility="Visible" Grid.ColumnSpan="8" Grid.RowSpan="3" Grid.Row="1"/>
-                <TextBlock x:Name="Recovered32" FontSize="10" Height="20" Width="200" Visibility="Visible" Grid.ColumnSpan="8" Grid.RowSpan="3" Grid.Row="1"/>
-                <TextBlock x:Name="Deaths32" FontSize="10" Height="20" Width="150" Visibility="Visible" Grid.ColumnSpan="8" Grid.RowSpan="3" Grid.Row="1"/>
-            </StackPanel>
-            <StackPanel Height="20" Width="800" Orientation="Horizontal">
-                <TextBlock x:Name="District33" FontSize="10" Height="20" Width="250" FontWeight="ExtraBlack" Visibility="Visible" Grid.ColumnSpan="8" Grid.RowSpan="3" Grid.Row="1"/>
-                <TextBlock x:Name="TotalCases33" FontSize="10" Height="20" Width="200" Visibility="Visible" Grid.ColumnSpan="8" Grid.RowSpan="3" Grid.Row="1"/>
-                <TextBlock x:Name="Recovered33" FontSize="10" Height="20" Width="200" Visibility="Visible" Grid.ColumnSpan="8" Grid.RowSpan="3" Grid.Row="1"/>
-                <TextBlock x:Name="Deaths33" FontSize="10" Height="20" Width="150" Visibility="Visible" Grid.ColumnSpan="8" Grid.RowSpan="3" Grid.Row="1"/>
-            </StackPanel>
-            <StackPanel Height="20" Width="800" Orientation="Horizontal">
-                <TextBlock x:Name="District34" FontSize="10" Height="20" Width="250" FontWeight="ExtraBlack" Visibility="Visible" Grid.ColumnSpan="8" Grid.RowSpan="3" Grid.Row="1"/>
-                <TextBlock x:Name="TotalCases34" FontSize="10" Height="20" Width="200" Visibility="Visible" Grid.ColumnSpan="8" Grid.RowSpan="3" Grid.Row="1"/>
-                <TextBlock x:Name="Recovered34" FontSize="10" Height="20" Width="200" Visibility="Visible" Grid.ColumnSpan="8" Grid.RowSpan="3" Grid.Row="1"/>
-                <TextBlock x:Name="Deaths34" FontSize="10" Height="20" Width="150" Visibility="Visible" Grid.ColumnSpan="8" Grid.RowSpan="3" Grid.Row="1"/>
-            </StackPanel>
-            <StackPanel Height="20" Width="800" Orientation="Horizontal">
-                <TextBlock x:Name="District35" FontSize="10" Height="20" Width="250" FontWeight="ExtraBlack" Visibility="Visible" Grid.ColumnSpan="8" Grid.RowSpan="3" Grid.Row="1"/>
-                <TextBlock x:Name="TotalCases35" FontSize="10" Height="20" Width="200" Visibility="Visible" Grid.ColumnSpan="8" Grid.RowSpan="3" Grid.Row="1"/>
-                <TextBlock x:Name="Recovered35" FontSize="10" Height="20" Width="200" Visibility="Visible" Grid.ColumnSpan="8" Grid.RowSpan="3" Grid.Row="1"/>
-                <TextBlock x:Name="Deaths35" FontSize="10" Height="20" Width="150" Visibility="Visible" Grid.ColumnSpan="8" Grid.RowSpan="3" Grid.Row="1"/>
-            </StackPanel>
-            <StackPanel Height="20" Width="800" Orientation="Horizontal">
-                <TextBlock x:Name="District36" FontSize="10" Height="20" Width="250" FontWeight="ExtraBlack" Visibility="Visible" Grid.ColumnSpan="8" Grid.RowSpan="3" Grid.Row="1"/>
-                <TextBlock x:Name="TotalCases36" FontSize="10" Height="20" Width="200" Visibility="Visible" Grid.ColumnSpan="8" Grid.RowSpan="3" Grid.Row="1"/>
-                <TextBlock x:Name="Recovered36" FontSize="10" Height="20" Width="200" Visibility="Visible" Grid.ColumnSpan="8" Grid.RowSpan="3" Grid.Row="1"/>
-                <TextBlock x:Name="Deaths36" FontSize="10" Height="20" Width="150" Visibility="Visible" Grid.ColumnSpan="8" Grid.RowSpan="3" Grid.Row="1"/>
-            </StackPanel>
-            <StackPanel Height="20" Width="800" Orientation="Horizontal">
-                <TextBlock x:Name="OtherStates" FontSize="10" Height="20" Width="250" FontWeight="ExtraBlack" Visibility="Visible" Grid.ColumnSpan="8" Grid.RowSpan="3" Grid.Row="1"/>
-                <TextBlock x:Name="OtherStatesTotalCases" FontSize="10" Height="20" Width="200" Visibility="Visible" Grid.ColumnSpan="8" Grid.RowSpan="3" Grid.Row="1"/>
-                <TextBlock x:Name="OtherStatesRecovered" FontSize="10" Height="20" Width="200" Visibility="Visible" Grid.ColumnSpan="8" Grid.RowSpan="3" Grid.Row="1"/>
-                <TextBlock x:Name="OtherStatesDeaths" FontSize="10" Height="20" Width="150" Visibility="Visible" Grid.ColumnSpan="8" Grid.RowSpan="3" Grid.Row="1"/>
-            </StackPanel>
-            <StackPanel Height="20" Width="800" Orientation="Horizontal" Margin="-2,0,2,0">
-                <TextBlock x:Name="Unknown" FontSize="10" Height="20" Width="250" FontWeight="ExtraBlack" Visibility="Visible" Grid.ColumnSpan="8" Grid.RowSpan="3" Grid.Row="1" Margin="0,2,0,-2"/>
-                <TextBlock x:Name="UnknownTotalCases" FontSize="10" Height="20" Width="200" Visibility="Visible" Grid.ColumnSpan="8" Grid.RowSpan="3" Grid.Row="1"/>
-                <TextBlock x:Name="UnknownRecovered" FontSize="10" Height="20" Width="200" Visibility="Visible" Grid.ColumnSpan="8" Grid.RowSpan="3" Grid.Row="1"/>
-                <TextBlock x:Name="UnknownDeaths" FontSize="10" Height="20" Width="150" Visibility="Visible" Grid.ColumnSpan="8" Grid.RowSpan="3" Grid.Row="1"/>
-            </StackPanel>
-            <StackPanel Height="20" Width="800" Orientation="Horizontal">
-                <TextBlock x:Name="Total" FontSize="10" Height="20" Width="250" FontWeight="ExtraBlack" Visibility="Visible" Grid.ColumnSpan="8" Grid.RowSpan="3" Grid.Row="1"/>
-                <TextBlock x:Name="TotalTotalCases" FontSize="10" Height="20" Width="200" Visibility="Visible" Grid.ColumnSpan="8" Grid.RowSpan="3" Grid.Row="1"/>
-                <TextBlock x:Name="TotalRecovered" FontSize="10" Height="20" Width="200" Visibility="Visible" Grid.ColumnSpan="8" Grid.RowSpan="3" Grid.Row="1"/>
-                <TextBlock x:Name="TotalDeaths" FontSize="10" Height="20" Width="150" Visibility="Visible" Grid.ColumnSpan="8" Grid.RowSpan="3" Grid.Row="1"/>
-            </StackPanel>
-        </StackPanel>
-        <TextBlock x:Name="SamplesTested" Visibility="Collapsed" FontSize="25" Height="40" Width="200" Grid.ColumnSpan="6" Grid.Column="1" Margin="4,1,11.667,5" Grid.Row="1" Grid.RowSpan="2"/>
-        <TextBlock x:Name="Positive" Visibility="Collapsed" FontSize="25" Height="40" Width="200" Grid.ColumnSpan="7" Grid.Column="7" Margin="31.333,1,20.333,5" Grid.Row="1" Grid.RowSpan="2"/>
-        <TextBlock x:Name="PositivePercent" Visibility="Collapsed" FontSize="25" Height="40" Width="200" Grid.ColumnSpan="6" Grid.Column="14" Margin="2.333,1,13.667,5" Grid.Row="1" Grid.RowSpan="2"/>
-        <TextBlock x:Name="TestsPerMillion" Visibility="Collapsed" FontSize="25" Height="40" Width="200" Grid.ColumnSpan="6" Margin="12,15,4,14" Grid.Row="3" Grid.RowSpan="3"/>
-        <TextBlock x:Name="AsOf" Visibility="Collapsed" FontSize="20" Height="40" Width="400" Grid.ColumnSpan="12" Margin="2.333,15,29,14" Grid.Row="3" Grid.RowSpan="3" Grid.Column="7"/>
-        <TextBlock x:Name="APVirusStrainValue" FontSize="20" Height="40" Visibility="Collapsed" Width="200" Grid.ColumnSpan="7" Margin="21,7,31,22" Grid.RowSpan="3" Grid.Row="1"/>
-        <TextBlock x:Name="APFirstCaseDocumentedIn" FontSize="20" Height="40" Width="250" Visibility="Collapsed" Grid.ColumnSpan="8" Margin="21,11,17,18" Grid.RowSpan="3" Grid.Row="3"/>
-        <TextBlock x:Name="APStartedFromIn" FontSize="10" Height="40" Visibility="Collapsed" Grid.ColumnSpan="9" Margin="23,13,13,16" Grid.RowSpan="3" Grid.Row="5"/>
-        <TextBlock x:Name="APCasesConfirmed" FontSize="10" Height="40" Visibility="Collapsed" Grid.ColumnSpan="12" Margin="21,2,20.667,4" Grid.RowSpan="2" Grid.Row="8"/>
-        <TextBlock x:Name="APActiveCases" FontSize="15" Height="40" Visibility="Collapsed" Grid.ColumnSpan="13" Margin="13,12,0.667,17" Grid.RowSpan="3" Grid.Row="10"/>
-        <TextBlock x:Name="APRecovered" FontSize="15" Height="40" Visibility="Collapsed" Grid.ColumnSpan="11" Margin="23,4,22.667,2" Grid.RowSpan="2" Grid.Row="16"/>
-        <TextBlock x:Name="APDeaths" FontSize="15" Height="40" Visibility="Collapsed" Grid.ColumnSpan="11" Margin="3,19,26.667,8" Grid.RowSpan="3" Grid.Row="19" Grid.Column="1"/>
-        <TextBlock x:Name="APDeathRate" FontSize="20" Height="40" Width="250" Visibility="Collapsed" Grid.ColumnSpan="8" Margin="33,8,5,18" Grid.RowSpan="3" Grid.Row="22"/>
-        <StackPanel Height="550" Width="880" Visibility="Collapsed" Grid.ColumnSpan="25" Margin="4,10,13.44,10" Grid.RowSpan="25">
-            <StackPanel Height="20" Width="880" Orientation="Horizontal">
-                <TextBlock x:Name="APDistrict1" FontSize="10" FontWeight="ExtraBlack" Height="20" Width="170" Visibility="Visible" Grid.ColumnSpan="8" Grid.RowSpan="3" Grid.Row="1"/>
-                <TextBlock x:Name="APTotalCases1" FontSize="10" Height="20" Width="200" Visibility="Visible" Grid.ColumnSpan="8" Grid.RowSpan="3" Grid.Row="1"/>
-                <TextBlock x:Name="APRecovered1" FontSize="10" Height="20" Width="200" Visibility="Visible" Grid.ColumnSpan="8" Grid.RowSpan="3" Grid.Row="1"/>
-                <TextBlock x:Name="APDeaths1" FontSize="10" Height="20" Width="150" Visibility="Visible" Grid.ColumnSpan="8" Grid.RowSpan="3" Grid.Row="1"/>
-                <TextBlock x:Name="APActiveCases1" FontSize="10" Height="20" Width="150" Visibility="Visible" Grid.ColumnSpan="8" Grid.RowSpan="3" Grid.Row="1"/>
-            </StackPanel>
-            <StackPanel Height="20" Width="880" Orientation="Horizontal">
-                <TextBlock x:Name="APDistrict2" FontSize="10" Height="20" Width="170" FontWeight="ExtraBlack" Visibility="Visible" Grid.ColumnSpan="8" Grid.RowSpan="3" Grid.Row="1"/>
-                <TextBlock x:Name="APTotalCases2" FontSize="10" Height="20" Width="200" Visibility="Visible" Grid.ColumnSpan="8" Grid.RowSpan="3" Grid.Row="1"/>
-                <TextBlock x:Name="APRecovered2" FontSize="10" Height="20" Width="200" Visibility="Visible" Grid.ColumnSpan="8" Grid.RowSpan="3" Grid.Row="1"/>
-                <TextBlock x:Name="APDeaths2d" FontSize="10" Height="20" Width="150" Visibility="Visible" Grid.ColumnSpan="8" Grid.RowSpan="3" Grid.Row="1"/>
-                <TextBlock x:Name="APActiveCases2" FontSize="10" Height="20" Width="150" Visibility="Visible" Grid.ColumnSpan="8" Grid.RowSpan="3" Grid.Row="1"/>
-            </StackPanel>
-            <StackPanel Height="20" Width="880" Orientation="Horizontal">
-                <TextBlock x:Name="APDistrict3" FontSize="10" Height="20" Width="170" FontWeight="ExtraBlack" Visibility="Visible" Grid.ColumnSpan="8" Grid.RowSpan="3" Grid.Row="1"/>
-                <TextBlock x:Name="APTotalCases3" FontSize="10" Height="20" Width="200" Visibility="Visible" Grid.ColumnSpan="8" Grid.RowSpan="3" Grid.Row="1"/>
-                <TextBlock x:Name="APRecovered3" FontSize="10" Height="20" Width="200" Visibility="Visible" Grid.ColumnSpan="8" Grid.RowSpan="3" Grid.Row="1"/>
-                <TextBlock x:Name="APDeaths3" FontSize="10" Height="20" Width="150" Visibility="Visible"/>
-                <TextBlock x:Name="APActiveCases3" FontSize="10" Height="20" Width="150" Visibility="Visible" Grid.ColumnSpan="8" Grid.RowSpan="3" Grid.Row="1"/>
-            </StackPanel>
-            <StackPanel Height="20" Width="880" Orientation="Horizontal">
-                <TextBlock x:Name="APDistrict4" FontSize="10" Height="20" Width="170" FontWeight="ExtraBlack" Visibility="Visible" Grid.ColumnSpan="8" Grid.RowSpan="3" Grid.Row="1"/>
-                <TextBlock x:Name="APTotalCases4" FontSize="10" Height="20" Width="200" Visibility="Visible" Grid.ColumnSpan="8" Grid.RowSpan="3" Grid.Row="1"/>
-                <TextBlock x:Name="APRecovered4" FontSize="10" Height="20" Width="200" Visibility="Visible" Grid.ColumnSpan="8" Grid.RowSpan="3" Grid.Row="1"/>
-                <TextBlock x:Name="APDeaths4" FontSize="10" Height="20" Width="150" Visibility="Visible" Grid.ColumnSpan="8" Grid.RowSpan="3" Grid.Row="1"/>
-                <TextBlock x:Name="APActiveCases4" FontSize="10" Height="20" Width="150" Visibility="Visible" Grid.ColumnSpan="8" Grid.RowSpan="3" Grid.Row="1"/>
-            </StackPanel>
-            <StackPanel Height="20" Width="880" Orientation="Horizontal">
-                <TextBlock x:Name="APDistrict5" FontSize="10" Height="20" Width="170" FontWeight="ExtraBlack" Visibility="Visible" Grid.ColumnSpan="8" Grid.RowSpan="3" Grid.Row="1"/>
-                <TextBlock x:Name="APTotalCases5" FontSize="10" Height="20" Width="200" Visibility="Visible" Grid.ColumnSpan="8" Grid.RowSpan="3" Grid.Row="1"/>
-                <TextBlock x:Name="APRecovered5" FontSize="10" Height="20" Width="200" Visibility="Visible" Grid.ColumnSpan="8" Grid.RowSpan="3" Grid.Row="1"/>
-                <TextBlock x:Name="APDeaths5" FontSize="10" Height="20" Width="150" Visibility="Visible" Grid.ColumnSpan="8" Grid.RowSpan="3" Grid.Row="1"/>
-                <TextBlock x:Name="APActiveCases5" FontSize="10" Height="20" Width="150" Visibility="Visible" Grid.ColumnSpan="8" Grid.RowSpan="3" Grid.Row="1"/>
-            </StackPanel>
-            <StackPanel Height="20" Width="880" Orientation="Horizontal">
-                <TextBlock x:Name="APDistrict6" FontSize="10" Height="20" Width="170" FontWeight="ExtraBlack" Visibility="Visible" Grid.ColumnSpan="8" Grid.RowSpan="3" Grid.Row="1"/>
-                <TextBlock x:Name="APTotalCases6" FontSize="10" Height="20" Width="200" Visibility="Visible" Grid.ColumnSpan="8" Grid.RowSpan="3" Grid.Row="1"/>
-                <TextBlock x:Name="APRecovered6" FontSize="10" Height="20" Width="200" Visibility="Visible" Grid.ColumnSpan="8" Grid.RowSpan="3" Grid.Row="1"/>
-                <TextBlock x:Name="APDeaths6" FontSize="10" Height="20" Width="150" Visibility="Visible" Grid.ColumnSpan="8" Grid.RowSpan="3" Grid.Row="1"/>
-                <TextBlock x:Name="APActiveCases6" FontSize="10" Height="20" Width="150" Visibility="Visible" Grid.ColumnSpan="8" Grid.RowSpan="3" Grid.Row="1"/>
-            </StackPanel>
-            <StackPanel Height="20" Width="880" Orientation="Horizontal">
-                <TextBlock x:Name="APDistrict7" FontSize="10" Height="20" Width="170" FontWeight="ExtraBlack" Visibility="Visible" Grid.ColumnSpan="8" Grid.RowSpan="3" Grid.Row="1"/>
-                <TextBlock x:Name="APTotalCases7" FontSize="10" Height="20" Width="200" Visibility="Visible" Grid.ColumnSpan="8" Grid.RowSpan="3" Grid.Row="1"/>
-                <TextBlock x:Name="APRecovered7" FontSize="10" Height="20" Width="200" Visibility="Visible" Grid.ColumnSpan="8" Grid.RowSpan="3" Grid.Row="1"/>
-                <TextBlock x:Name="APDeaths7" FontSize="10" Height="20" Width="150" Visibility="Visible" Grid.ColumnSpan="8" Grid.RowSpan="3" Grid.Row="1"/>
-                <TextBlock x:Name="APActiveCases7" FontSize="10" Height="20" Width="150" Visibility="Visible" Grid.ColumnSpan="8" Grid.RowSpan="3" Grid.Row="1"/>
-            </StackPanel>
-            <StackPanel Height="20" Width="880" Orientation="Horizontal">
-                <TextBlock x:Name="APDistrict8" FontSize="10" Height="20" Width="170" FontWeight="ExtraBlack" Visibility="Visible" Grid.ColumnSpan="8" Grid.RowSpan="3" Grid.Row="1"/>
-                <TextBlock x:Name="APTotalCases8" FontSize="10" Height="20" Width="200" Visibility="Visible" Grid.ColumnSpan="8" Grid.RowSpan="3" Grid.Row="1"/>
-                <TextBlock x:Name="APRecovered8" FontSize="10" Height="20" Width="200" Visibility="Visible" Grid.ColumnSpan="8" Grid.RowSpan="3" Grid.Row="1"/>
-                <TextBlock x:Name="APDeaths8" FontSize="10" Height="20" Width="150" Visibility="Visible" Grid.ColumnSpan="8" Grid.RowSpan="3" Grid.Row="1"/>
-                <TextBlock x:Name="APActiveCases8" FontSize="10" Height="20" Width="150" Visibility="Visible" Grid.ColumnSpan="8" Grid.RowSpan="3" Grid.Row="1"/>
-            </StackPanel>
-            <StackPanel Height="20" Width="880" Orientation="Horizontal">
-                <TextBlock x:Name="APDistrict9" FontSize="10" Height="20" Width="170" FontWeight="ExtraBlack" Visibility="Visible" Grid.ColumnSpan="8" Grid.RowSpan="3" Grid.Row="1"/>
-                <TextBlock x:Name="APTotalCases9" FontSize="10" Height="20" Width="200" Visibility="Visible" Grid.ColumnSpan="8" Grid.RowSpan="3" Grid.Row="1"/>
-                <TextBlock x:Name="APRecovered9" FontSize="10" Height="20" Width="200" Visibility="Visible" Grid.ColumnSpan="8" Grid.RowSpan="3" Grid.Row="1"/>
-                <TextBlock x:Name="APDeaths9" FontSize="10" Height="20" Width="150" Visibility="Visible" Grid.ColumnSpan="8" Grid.RowSpan="3" Grid.Row="1"/>
-                <TextBlock x:Name="APActiveCases9" FontSize="10" Height="20" Width="150" Visibility="Visible" Grid.ColumnSpan="8" Grid.RowSpan="3" Grid.Row="1"/>
-            </StackPanel>
-            <StackPanel Height="20" Width="880" Orientation="Horizontal">
-                <TextBlock x:Name="APDistrict10" FontSize="10" Height="20" Width="170" FontWeight="ExtraBlack" Visibility="Visible" Grid.ColumnSpan="8" Grid.RowSpan="3" Grid.Row="1"/>
-                <TextBlock x:Name="APTotalCases10" FontSize="10" Height="20" Width="200" Visibility="Visible" Grid.ColumnSpan="8" Grid.RowSpan="3" Grid.Row="1"/>
-                <TextBlock x:Name="APRecovered10" FontSize="10" Height="20" Width="200" Visibility="Visible" Grid.ColumnSpan="8" Grid.RowSpan="3" Grid.Row="1"/>
-                <TextBlock x:Name="APDeaths10" FontSize="10" Height="20" Width="150" Visibility="Visible" Grid.ColumnSpan="8" Grid.RowSpan="3" Grid.Row="1"/>
-                <TextBlock x:Name="APActiveCases10" FontSize="10" Height="20" Width="150" Visibility="Visible" Grid.ColumnSpan="8" Grid.RowSpan="3" Grid.Row="1"/>
-            </StackPanel>
-            <StackPanel Height="20" Width="880" Orientation="Horizontal">
-                <TextBlock x:Name="APDistrict11" FontSize="10" Height="20" Width="170" FontWeight="ExtraBlack" Visibility="Visible" Grid.ColumnSpan="8" Grid.RowSpan="3" Grid.Row="1"/>
-                <TextBlock x:Name="APTotalCases11" FontSize="10" Height="20" Width="200" Visibility="Visible" Grid.ColumnSpan="8" Grid.RowSpan="3" Grid.Row="1"/>
-                <TextBlock x:Name="APRecovered11" FontSize="10" Height="20" Width="200" Visibility="Visible" Grid.ColumnSpan="8" Grid.RowSpan="3" Grid.Row="1"/>
-                <TextBlock x:Name="APDeaths11" FontSize="10" Height="20" Width="150" Visibility="Visible" Grid.ColumnSpan="8" Grid.RowSpan="3" Grid.Row="1"/>
-                <TextBlock x:Name="APActiveCases11" FontSize="10" Height="20" Width="150" Visibility="Visible" Grid.ColumnSpan="8" Grid.RowSpan="3" Grid.Row="1"/>
-            </StackPanel>
-            <StackPanel Height="20" Width="880" Orientation="Horizontal">
-                <TextBlock x:Name="APDistrict12" FontSize="10" Height="20" Width="170" FontWeight="ExtraBlack" Visibility="Visible" Grid.ColumnSpan="8" Grid.RowSpan="3" Grid.Row="1"/>
-                <TextBlock x:Name="APTotalCases12" FontSize="10" Height="20" Width="200" Visibility="Visible" Grid.ColumnSpan="8" Grid.RowSpan="3" Grid.Row="1"/>
-                <TextBlock x:Name="APRecovered12" FontSize="10" Height="20" Width="200" Visibility="Visible" Grid.ColumnSpan="8" Grid.RowSpan="3" Grid.Row="1"/>
-                <TextBlock x:Name="APDeaths12" FontSize="10" Height="20" Width="150" Visibility="Visible" Grid.ColumnSpan="8" Grid.RowSpan="3" Grid.Row="1"/>
-                <TextBlock x:Name="APActiveCases12" FontSize="10" Height="20" Width="150" Visibility="Visible" Grid.ColumnSpan="8" Grid.RowSpan="3" Grid.Row="1"/>
-            </StackPanel>
-            <StackPanel Height="20" Width="880" Orientation="Horizontal">
-                <TextBlock x:Name="APDistrict13" FontSize="10" Height="20" Width="170" FontWeight="ExtraBlack" Visibility="Visible" Grid.ColumnSpan="8" Grid.RowSpan="3" Grid.Row="1"/>
-                <TextBlock x:Name="APTotalCases13" FontSize="10" Height="20" Width="200" Visibility="Visible" Grid.ColumnSpan="8" Grid.RowSpan="3" Grid.Row="1"/>
-                <TextBlock x:Name="APRecovered13" FontSize="10" Height="20" Width="200" Visibility="Visible" Grid.ColumnSpan="8" Grid.RowSpan="3" Grid.Row="1"/>
-                <TextBlock x:Name="APDeaths13" FontSize="10" Height="20" Width="150" Visibility="Visible" Grid.ColumnSpan="8" Grid.RowSpan="3" Grid.Row="1"/>
-                <TextBlock x:Name="APActiveCases13" FontSize="10" Height="20" Width="150" Visibility="Visible" Grid.ColumnSpan="8" Grid.RowSpan="3" Grid.Row="1"/>
-            </StackPanel>
-        </StackPanel>
-        <TextBlock x:Name="APSamplesTested" Visibility="Collapsed" FontSize="15" Height="40" Width="200" Grid.ColumnSpan="7" Grid.Column="1" Margin="30,5,20,1" Grid.Row="1" Grid.RowSpan="2"/>
-        <TextBlock x:Name="APTestedNegativePositive" Visibility="Collapsed" FontSize="15" Height="40" Width="200" Grid.ColumnSpan="6" Margin="5,0,10,6" Grid.Row="4" Grid.RowSpan="2"/>
-        <TextBlock x:Name="APTestedPositive" Visibility="Collapsed" FontSize="15" Height="40" Grid.ColumnSpan="8" Margin="34.667,6,13.333,0" Grid.Row="3" Grid.RowSpan="2" Grid.Column="15"/>
-        <TextBlock x:Name="APPercentTestedPositive" Visibility="Collapsed" FontSize="15" Height="40" Width="200" Grid.ColumnSpan="6" Margin="4.667,16,11,13" Grid.Row="10" Grid.RowSpan="3" Grid.Column="17"/>
-        <TextBlock x:Name="APAsOf" Visibility="Collapsed" FontSize="20" Grid.ColumnSpan="13" Margin="4,14,28.333,14" Grid.Row="20" Grid.RowSpan="4" Grid.Column="4"/>
-        
-</Grid>
+    </Grid>
 </Window>
