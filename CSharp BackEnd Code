@@ -1,1 +1,533 @@
-
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Net;
+using System.Text;
+using System.Threading.Tasks;
+using System.Windows;
+using System.Windows.Controls;
+using System.Windows.Data;
+using System.Windows.Documents;
+using System.Windows.Input;
+using System.Windows.Media;
+using System.Windows.Media.Imaging;
+using System.Windows.Navigation;
+using System.Windows.Shapes;
+namespace CoronaApp
+{
+    public partial class MainWindow : Window
+    {
+        public MainWindow()
+        {
+            InitializeComponent();
+        }
+        string WebContent;
+        int l,i;
+        private void GeneralInformation_PreviewMouseDown(object sender, MouseButtonEventArgs e)
+        {
+            GeneralInformation.Foreground = Brushes.Red;
+            CurrentConditionsTextBlockUnderLine.Visibility = Visibility.Visible;
+            India.Foreground = Brushes.Orange;
+            IndiaUnderLine.Visibility = Visibility.Collapsed;
+            OtherCountries.Foreground = Brushes.Orange;
+            OtherCountriesUnderLine.Visibility = Visibility.Collapsed;
+        }
+        private void GeneralInformation_MouseEnter(object sender, MouseEventArgs e)
+        {
+            GeneralInformation.Foreground = Brushes.DarkOrchid;
+        }
+        private void GeneralInformation_MouseLeave(object sender, MouseEventArgs e)
+        {
+            GeneralInformation.Foreground = Brushes.Orange;
+        }
+        private void India_PreviewMouseDown(object sender, MouseButtonEventArgs e)
+        {
+            WebClient client = new WebClient();
+            string WebContent = client.DownloadString("https://www.worldometers.info/coronavirus/country/india/");
+            TextBox.Text = WebContent;
+            India.Foreground = Brushes.Red;
+            IndiaUnderLine.Visibility = Visibility.Visible;
+            GeneralInformation.Foreground = Brushes.Orange;
+            CurrentConditionsTextBlockUnderLine.Visibility = Visibility.Collapsed;
+            OtherCountries.Foreground = Brushes.Orange;
+            OtherCountriesUnderLine.Visibility = Visibility.Collapsed;
+            LastUpdatedStackPanel.Visibility = Visibility.Visible;
+            IndiaStackPanel.Visibility = Visibility.Visible;
+            NoRecentActivity.Visibility = Visibility.Collapsed;
+            InfoAtTheBeginning.Visibility = Visibility.Collapsed;
+            SelectATab.Visibility = Visibility.Collapsed;
+            l = TextBox.Text.Length;
+            for (i = 0; i < l; i++)
+            {
+                CasesQuery.Text = $"{CasesQuery.Text}{TextBox.Text[i]}";
+                if (CasesQuery.Text == "Coronavirus:")
+                {
+                    if (TextBox.Text[i + 1] == ' ')
+                    {
+                        i = i + 2;
+                        CasesQuery.Text = null;
+                        while (TextBox.Text[i] != ' ')
+                        {
+                            CasesQuery.Text = $"{CasesQuery.Text} {TextBox.Text[i]}";
+                            i++;
+                        }
+                        break;
+                    }
+                }
+                else if (TextBox.Text[i] == ' ')
+                {
+                    CasesQuery.Text = null;
+                }
+            }
+            Cases.Text = CasesQuery.Text;
+            CasesQuery.Text = null;
+            for (i = 0; i < l; i++)
+            {
+                CasesQuery.Text = $"{CasesQuery.Text}{TextBox.Text[i]}";
+                if (CasesQuery.Text == "and")
+                {
+                    if (TextBox.Text[i + 1] == ' ')
+                    {
+                        i = i + 2;
+                        CasesQuery.Text = null;
+                        while (TextBox.Text[i] != ' ')
+                        {
+                            CasesQuery.Text = $"{CasesQuery.Text} {TextBox.Text[i]}";
+                            i++;
+                        }
+                        break;
+                    }
+                }
+                else if (TextBox.Text[i] == ' ')
+                {
+                    CasesQuery.Text = null;
+                }
+            }
+            Deaths.Text = CasesQuery.Text;
+            CasesQuery.Text = null;
+            for (i = 0; i < l; i++)
+            {
+                CasesQuery.Text = $"{CasesQuery.Text}{TextBox.Text[i]}";
+                if (CasesQuery.Text == "class=")
+                {
+                    if (TextBox.Text[i + 1] == '"' && TextBox.Text[i + 2] == 'm' && TextBox.Text[i + 3] == 'a' && TextBox.Text[i + 4] == 'i' && TextBox.Text[i + 5] == 'n' && TextBox.Text[i + 6] == 'c' && TextBox.Text[i + 7] == 'o' && TextBox.Text[i + 8] == 'u' && TextBox.Text[i + 9] == 'n' && TextBox.Text[i + 10] == 't' && TextBox.Text[i + 11] == 'e' && TextBox.Text[i + 12] == 'r' && TextBox.Text[i + 13] == '-' && TextBox.Text[i + 14] == 'n' && TextBox.Text[i + 15] == 'u' && TextBox.Text[i + 16] == 'm' && TextBox.Text[i + 17] == 'b' && TextBox.Text[i + 18] == 'e' && TextBox.Text[i + 19] == 'r' && TextBox.Text[i + 20] == '"' && TextBox.Text[i + 21] == ' ' && TextBox.Text[i + 22] == 's' && TextBox.Text[i + 23] == 't' && TextBox.Text[i + 24] == 'y' && TextBox.Text[i + 25] == 'l' && TextBox.Text[i + 26] == 'e' && TextBox.Text[i + 27] == '=' && TextBox.Text[i + 28] == '"')
+                    {
+                        CasesQuery.Text = null;
+                        for (i = i + 29; i < l; i++)
+                        {
+                            CasesQuery.Text = $"{CasesQuery.Text}{TextBox.Text[i]}";
+                            if (CasesQuery.Text == "color:#8ACA2B")
+                            {
+                                if (TextBox.Text[i + 1] == ' ' && TextBox.Text[i + 2] == '"' && TextBox.Text[i + 3] == '>')
+                                {
+                                    CasesQuery.Text = null;
+                                    for (i = i + 11; TextBox.Text[i] != '<'; i++)
+                                    {
+                                        CasesQuery.Text = $"{CasesQuery.Text} {TextBox.Text[i]}";
+                                    }
+                                    Recovered.Text = CasesQuery.Text;
+                                    break;
+                                }
+                            }
+                        }
+                    }
+                }
+                else if (TextBox.Text[i] == ' ')
+                {
+                    CasesQuery.Text = null;
+                }
+            }
+            CasesQuery.Text = null;
+            for (i = 0; i < l; i++)
+            {
+                CasesQuery.Text = $"{CasesQuery.Text}{TextBox.Text[i]}";
+                if (CasesQuery.Text == "text-align:center")
+                {
+                    if (TextBox.Text[i + 1] == '"' && TextBox.Text[i + 2] == '>' && TextBox.Text[i + 3] == 'L' && TextBox.Text[i + 4] == 'a' && TextBox.Text[i + 5] == 's' && TextBox.Text[i + 6] == 't' && TextBox.Text[i + 7] == ' ' && TextBox.Text[i + 8] == 'u' && TextBox.Text[i + 9] == 'p' && TextBox.Text[i + 10] == 'd' && TextBox.Text[i + 11] == 'a' && TextBox.Text[i + 12] == 't' && TextBox.Text[i + 13] == 'e' && TextBox.Text[i + 14] == 'd' && TextBox.Text[i + 15] == ':' && TextBox.Text[i + 16] == ' ')
+                    {
+                        CasesQuery.Text = null;
+                        for (i = i + 17; TextBox.Text[i] != '<'; i++)
+                        {
+                            CasesQuery.Text = $"{CasesQuery.Text} {TextBox.Text[i]}";
+                        }
+                        LastUpdatedOn.Text = CasesQuery.Text;
+                        break;
+                    }
+                }
+                else if (TextBox.Text[i] == ' ')
+                {
+                    CasesQuery.Text = null;
+                }
+            }
+            CasesQuery.Text = null;
+            for (i = 0; i < l; i++)
+            {
+                CasesQuery.Text = $"{CasesQuery.Text}{TextBox.Text[i]}";
+                if (CasesQuery.Text == "class=")
+                {
+                    if (TextBox.Text[i + 1] == '"' && TextBox.Text[i + 2] == 'n' && TextBox.Text[i + 3] == 'u' && TextBox.Text[i + 4] == 'm' && TextBox.Text[i + 5] == 'b' && TextBox.Text[i + 6] == 'e' && TextBox.Text[i + 7] == 'r' && TextBox.Text[i + 8] == '-' && TextBox.Text[i + 9] == 't' && TextBox.Text[i + 10] == 'a' && TextBox.Text[i + 11] == 'b' && TextBox.Text[i + 12] == 'l' && TextBox.Text[i + 13] == 'e' && TextBox.Text[i + 14] == '-' && TextBox.Text[i + 15] == 'm' && TextBox.Text[i + 16] == 'a' && TextBox.Text[i + 17] == 'i' && TextBox.Text[i + 18] == 'n' && TextBox.Text[i + 19] == '"' && TextBox.Text[i + 20] == '>')
+                    {
+                        CasesQuery.Text = null;
+                        for (i = i + 21; TextBox.Text[i] != '<'; i++)
+                        {
+                            CasesQuery.Text = $"{CasesQuery.Text} {TextBox.Text[i]}";
+                        }
+                        WhichHadAnOvercome.Text = CasesQuery.Text;
+                        break;
+                    }
+                }
+                else if (TextBox.Text[i] == ' ')
+                {
+                    CasesQuery.Text = null;
+                }
+            }
+            CasesQuery.Text = null;
+            for (i = 0; i < l; i++)
+            {
+                CasesQuery.Text = $"{CasesQuery.Text}{TextBox.Text[i]}";
+                if (CasesQuery.Text == "style=")
+                {
+                    if (TextBox.Text[i + 1] == '"' && TextBox.Text[i + 2] == 'c' && TextBox.Text[i + 3] == 'o' && TextBox.Text[i + 4] == 'l' && TextBox.Text[i + 5] == 'o' && TextBox.Text[i + 6] == 'r' && TextBox.Text[i + 7] == ':' && TextBox.Text[i + 8] == '#' && TextBox.Text[i + 9] == '8' && TextBox.Text[i + 10] == 'A' && TextBox.Text[i + 11] == 'C' && TextBox.Text[i + 12] == 'A' && TextBox.Text[i + 13] == '2' && TextBox.Text[i + 14] == 'B' && TextBox.Text[i + 15] == '"' && TextBox.Text[i + 16] == '>')
+                    {
+                        for (i = i + 17; TextBox.Text[i] != '<'; i++)
+                        {
+                            //do nothing
+                        }
+                        CasesQuery.Text = null;
+                        if (TextBox.Text[i + 1] == '/' && TextBox.Text[i + 2] == 's' && TextBox.Text[i + 3] == 'p' && TextBox.Text[i + 4] == 'a' && TextBox.Text[i + 5] == 'n' && TextBox.Text[i + 6] == '>' && TextBox.Text[i + 8] == '(' && TextBox.Text[i + 9] == '<' && TextBox.Text[i + 10] == 's' && TextBox.Text[i + 11] == 't' && TextBox.Text[i + 12] == 'r' && TextBox.Text[i + 13] == 'o' && TextBox.Text[i + 14] == 'n' && TextBox.Text[i + 15] == 'g' && TextBox.Text[i + 16] == '>')
+                        {
+                            for (i = i + 17; TextBox.Text[i] != '<'; i++)
+                            {
+                                CasesQuery.Text = $"{CasesQuery.Text} {TextBox.Text[i]}";
+                            }
+                            RecoveredPercentage.Text = $"{CasesQuery.Text}%";
+                            break;
+                        }
+                    }
+                }
+                else if (TextBox.Text[i] == ' ')
+                {
+                    CasesQuery.Text = null;
+                }
+            }
+            CasesQuery.Text = null;
+            for (i = 0; i < l; i++)
+            {
+                CasesQuery.Text = $"{CasesQuery.Text}{TextBox.Text[i]}";
+                if (CasesQuery.Text == "class=")
+                {
+                    if (TextBox.Text[i + 1] == '"' && TextBox.Text[i + 2] == 'n' && TextBox.Text[i + 3] == 'u' && TextBox.Text[i + 4] == 'm' && TextBox.Text[i + 5] == 'b' && TextBox.Text[i + 6] == 'e' && TextBox.Text[i + 7] == 'r' && TextBox.Text[i + 8] == '-' && TextBox.Text[i + 9] == 't' && TextBox.Text[i + 10] == 'a' && TextBox.Text[i + 11] == 'b' && TextBox.Text[i + 12] == 'l' && TextBox.Text[i + 13] == 'e' && TextBox.Text[i + 14] == '"' && TextBox.Text[i + 15] == '>')
+                    {
+                        for (i = i + 17; TextBox.Text[i] != '<'; i++)
+                        {
+                            //do nothing
+                        }
+                        CasesQuery.Text = null;
+                        if (TextBox.Text[i + 1] == '/' && TextBox.Text[i + 2] == 's' && TextBox.Text[i + 3] == 'p' && TextBox.Text[i + 4] == 'a' && TextBox.Text[i + 5] == 'n' && TextBox.Text[i + 6] == '>' && TextBox.Text[i + 8] == '(' && TextBox.Text[i + 9] == '<' && TextBox.Text[i + 10] == 's' && TextBox.Text[i + 11] == 't' && TextBox.Text[i + 12] == 'r' && TextBox.Text[i + 13] == 'o' && TextBox.Text[i + 14] == 'n' && TextBox.Text[i + 15] == 'g' && TextBox.Text[i + 16] == '>')
+                        {
+                            for (i = i + 17; TextBox.Text[i] != '<'; i++)
+                            {
+                                CasesQuery.Text = $"{CasesQuery.Text} {TextBox.Text[i]}";
+                            }
+                            DeathPercentage.Text = $"{CasesQuery.Text}%";
+                            break;
+                        }
+                    }
+                }
+                else if (TextBox.Text[i] == ' ')
+                {
+                    CasesQuery.Text = null;
+                }
+            }
+            for (i = 0; i < l; i++)
+            {
+                CasesQuery.Text = $"{CasesQuery.Text}{TextBox.Text[i]}";
+                if (CasesQuery.Text == "class=")
+                {
+                    if (TextBox.Text[i + 1] == '"' && TextBox.Text[i + 2] == 'n' && TextBox.Text[i + 3] == 'e' && TextBox.Text[i + 4] == 'w' && TextBox.Text[i + 5] == 's' && TextBox.Text[i + 6] == '_' && TextBox.Text[i + 7] == 'l' && TextBox.Text[i + 8] == 'i' && TextBox.Text[i + 9] == '"' && TextBox.Text[i + 10] == '>' && TextBox.Text[i + 11] == '<' && TextBox.Text[i + 12] == 's' && TextBox.Text[i + 13] == 't' && TextBox.Text[i + 14] == 'r' && TextBox.Text[i + 15] == 'o' && TextBox.Text[i + 16] == 'n' && TextBox.Text[i + 17] == 'g' && TextBox.Text[i + 18] == '>')
+                    {
+                        CasesQuery.Text = null;
+                        for (i = i + 19; TextBox.Text[i] != ' '; i++)
+                        {
+                            CasesQuery.Text = $"{CasesQuery.Text} {TextBox.Text[i]}";
+                        }
+                        NumberOfNewCasesValue.Text = CasesQuery.Text;
+                        break;
+                    }
+                }
+                else if (TextBox.Text[i] == ' ')
+                {
+                    CasesQuery.Text = null;
+                }
+            }
+            CasesQuery.Text = null;
+            for (i = 0; i < l; i++)
+            {
+                CasesQuery.Text = $"{CasesQuery.Text}{TextBox.Text[i]}";
+                if (CasesQuery.Text == "and ")
+                {
+                    if (TextBox.Text[i + 1] == '<' && TextBox.Text[i + 2] == 's' && TextBox.Text[i + 3] == 't' && TextBox.Text[i + 4] == 'r' && TextBox.Text[i + 5] == 'o' && TextBox.Text[i + 6] == 'n' && TextBox.Text[i + 7] == 'g' && TextBox.Text[i + 8] == '>')// && TextBox.Text[i + 9] == '"' && TextBox.Text[i + 10] == '>' && TextBox.Text[i + 11] == '<' && TextBox.Text[i + 12] == 's' && TextBox.Text[i + 13] == 't' && TextBox.Text[i + 14] == 'r' && TextBox.Text[i + 15] == 'o' && TextBox.Text[i + 16] == 'n' && TextBox.Text[i + 17] == 'g' && TextBox.Text[i + 18] == '>')
+                    {
+                        CasesQuery.Text = null;
+                        for (i = i + 9; TextBox.Text[i] != ' '; i++)
+                        {
+                            CasesQuery.Text = $"{CasesQuery.Text} {TextBox.Text[i]}";
+                        }
+                        NumberOfNewDeathsValue.Text = CasesQuery.Text;
+                        break;
+                    }
+                }
+                else if (TextBox.Text[i] == ' ')
+                {
+                    CasesQuery.Text = null;
+                }
+            }
+            //CasesQuery.Text = null;
+            //for (i = 0; i < l; i++)
+            //{
+            //    string temp;
+            //    CasesQuery.Text = $"{CasesQuery.Text}{TextBox.Text[i]}";
+            //    if (CasesQuery.Text == "data-date=")
+            //    {
+            //        if (TextBox.Text[i + 1] == '"')// && TextBox.Text[i + 2] == 's' && TextBox.Text[i + 3] == 't' && TextBox.Text[i + 4] == 'r' && TextBox.Text[i + 5] == 'o' && TextBox.Text[i + 6] == 'n' && TextBox.Text[i + 7] == 'g' && TextBox.Text[i + 8] == '>')// && TextBox.Text[i + 9] == '"' && TextBox.Text[i + 10] == '>' && TextBox.Text[i + 11] == '<' && TextBox.Text[i + 12] == 's' && TextBox.Text[i + 13] == 't' && TextBox.Text[i + 14] == 'r' && TextBox.Text[i + 15] == 'o' && TextBox.Text[i + 16] == 'n' && TextBox.Text[i + 17] == 'g' && TextBox.Text[i + 18] == '>')
+            //        {
+            //            CasesQuery.Text = null;
+            //            for (i = i + 2; TextBox.Text[i] != '"'; i++)
+            //            {
+            //                CasesQuery.Text = $"{CasesQuery.Text} {TextBox.Text[i]}";
+            //            }
+            //            temp = CasesQuery.Text;
+            //            CasesQuery.Text = null;
+            //            for (i = i + 2; TextBox.Text[i] != '<' /*|| TextBox.Text[i] != '&'*/; i++)
+            //            {
+            //                CasesQuery.Text = $"{CasesQuery.Text} {TextBox.Text[i]}";
+            //            }
+            //            MonthName1.Text = $"{temp}\n{CasesQuery.Text}";
+            //            CasesQuery.Text = null;
+            //            break;
+            //        }
+            //    }
+            //    else if (TextBox.Text[i] == ' ')
+            //    {
+            //        CasesQuery.Text = null;
+            //    }
+            //}
+            //for (i = i + 1; i < l; i++)
+            //{
+            //    CasesQuery.Text = $"{CasesQuery.Text}{TextBox.Text[i]}";
+            //    if (CasesQuery.Text == "class=")
+            //    {
+            //        if (TextBox.Text[i + 1] == '"' && TextBox.Text[i + 2] == 'n' && TextBox.Text[i + 3] == 'e' && TextBox.Text[i + 4] == 'w' && TextBox.Text[i + 5] == 's' && TextBox.Text[i + 6] == '_' && TextBox.Text[i + 7] == 'l' && TextBox.Text[i + 8] == 'i' && TextBox.Text[i + 9] == '"' && TextBox.Text[i + 10] == '>' && TextBox.Text[i + 11] == '<' && TextBox.Text[i + 12] == 's' && TextBox.Text[i + 13] == 't' && TextBox.Text[i + 14] == 'r' && TextBox.Text[i + 15] == 'o' && TextBox.Text[i + 16] == 'n' && TextBox.Text[i + 17] == 'g' && TextBox.Text[i + 18] == '>')
+            //        {
+            //            CasesQuery.Text = null;
+            //            for (i = i + 19; TextBox.Text[i] != ' '; i++)
+            //            {
+            //                CasesQuery.Text = $"{CasesQuery.Text} {TextBox.Text[i]}";
+            //            }
+            //            NewCases1.Text = CasesQuery.Text;
+            //            CasesQuery.Text = null;
+            //            break;
+            //        }
+            //    }
+            //    else if (TextBox.Text[i] == ' ')
+            //    {
+            //        CasesQuery.Text = null;
+            //    }
+            //}
+            //for (i = i + 1; i < l; i++)
+            //{
+            //    CasesQuery.Text = $"{CasesQuery.Text}{TextBox.Text[i]}";
+            //    if (CasesQuery.Text == "and ")
+            //    {
+            //        if (TextBox.Text[i + 1] == '<' && TextBox.Text[i + 2] == 's' && TextBox.Text[i + 3] == 't' && TextBox.Text[i + 4] == 'r' && TextBox.Text[i + 5] == 'o' && TextBox.Text[i + 6] == 'n' && TextBox.Text[i + 7] == 'g' && TextBox.Text[i + 8] == '>')// && TextBox.Text[i + 9] == '"' && TextBox.Text[i + 10] == '>' && TextBox.Text[i + 11] == '<' && TextBox.Text[i + 12] == 's' && TextBox.Text[i + 13] == 't' && TextBox.Text[i + 14] == 'r' && TextBox.Text[i + 15] == 'o' && TextBox.Text[i + 16] == 'n' && TextBox.Text[i + 17] == 'g' && TextBox.Text[i + 18] == '>')
+            //        {
+            //            CasesQuery.Text = null;
+            //            for (i = i + 9; TextBox.Text[i] != ' '; i++)
+            //            {
+            //                CasesQuery.Text = $"{CasesQuery.Text} {TextBox.Text[i]}";
+            //            }
+            //            NewDeaths1.Text = CasesQuery.Text;  //This is not displayed in the UI , i dont know why
+            //            break;
+            //        }
+            //    }
+            //    else if (TextBox.Text[i] == ' ')
+            //    {
+            //        CasesQuery.Text = null;
+            //    }
+            //}
+            //CasesQuery.Text = null;
+            //for (i = i + 1; i < l; i++)
+            //{
+            //    string temp;
+            //    CasesQuery.Text = $"{CasesQuery.Text}{TextBox.Text[i]}";
+            //    if (CasesQuery.Text == "data-date=")
+            //    {
+            //        if (TextBox.Text[i + 1] == '"')// && TextBox.Text[i + 2] == 's' && TextBox.Text[i + 3] == 't' && TextBox.Text[i + 4] == 'r' && TextBox.Text[i + 5] == 'o' && TextBox.Text[i + 6] == 'n' && TextBox.Text[i + 7] == 'g' && TextBox.Text[i + 8] == '>')// && TextBox.Text[i + 9] == '"' && TextBox.Text[i + 10] == '>' && TextBox.Text[i + 11] == '<' && TextBox.Text[i + 12] == 's' && TextBox.Text[i + 13] == 't' && TextBox.Text[i + 14] == 'r' && TextBox.Text[i + 15] == 'o' && TextBox.Text[i + 16] == 'n' && TextBox.Text[i + 17] == 'g' && TextBox.Text[i + 18] == '>')
+            //        {
+            //            CasesQuery.Text = null;
+            //            for (i = i + 2; TextBox.Text[i] != '"'; i++)
+            //            {
+            //                CasesQuery.Text = $"{CasesQuery.Text} {TextBox.Text[i]}";
+            //            }
+            //            temp = CasesQuery.Text;
+            //            CasesQuery.Text = null;
+            //            for (i = i + 2; TextBox.Text[i] != '&'; i++)
+            //            {
+            //                CasesQuery.Text = $"{CasesQuery.Text} {TextBox.Text[i]}";
+            //            }
+            //            MonthName2.Text = $"{temp}\n{CasesQuery.Text}";
+            //            CasesQuery.Text = null;
+            //            break;
+            //        }
+            //    }
+            //    else if (TextBox.Text[i] == ' ')
+            //    {
+            //        CasesQuery.Text = null;
+            //    }
+            //}
+            //for (i = i + 1; i < l; i++)
+            //{
+            //    CasesQuery.Text = $"{CasesQuery.Text}{TextBox.Text[i]}";
+            //    if (CasesQuery.Text == "class=")
+            //    {
+            //        if (TextBox.Text[i + 1] == '"' && TextBox.Text[i + 2] == 'n' && TextBox.Text[i + 3] == 'e' && TextBox.Text[i + 4] == 'w' && TextBox.Text[i + 5] == 's' && TextBox.Text[i + 6] == '_' && TextBox.Text[i + 7] == 'l' && TextBox.Text[i + 8] == 'i' && TextBox.Text[i + 9] == '"' && TextBox.Text[i + 10] == '>' && TextBox.Text[i + 11] == '<' && TextBox.Text[i + 12] == 's' && TextBox.Text[i + 13] == 't' && TextBox.Text[i + 14] == 'r' && TextBox.Text[i + 15] == 'o' && TextBox.Text[i + 16] == 'n' && TextBox.Text[i + 17] == 'g' && TextBox.Text[i + 18] == '>')
+            //        {
+            //            CasesQuery.Text = null;
+            //            for (i = i + 19; TextBox.Text[i] != ' '; i++)
+            //            {
+            //                CasesQuery.Text = $"{CasesQuery.Text} {TextBox.Text[i]}";
+            //            }
+            //            NewCases2.Text = CasesQuery.Text;
+            //            CasesQuery.Text = null;
+            //            break;
+            //        }
+            //    }
+            //    else if (TextBox.Text[i] == ' ')
+            //    {
+            //        CasesQuery.Text = null;
+            //    }
+            //}
+            //for (i = i + 1; i < l; i++)
+            //{
+            //    CasesQuery.Text = $"{CasesQuery.Text}{TextBox.Text[i]}";
+            //    if (CasesQuery.Text == "and ")
+            //    {
+            //        if (TextBox.Text[i + 1] == '<' && TextBox.Text[i + 2] == 's' && TextBox.Text[i + 3] == 't' && TextBox.Text[i + 4] == 'r' && TextBox.Text[i + 5] == 'o' && TextBox.Text[i + 6] == 'n' && TextBox.Text[i + 7] == 'g' && TextBox.Text[i + 8] == '>')// && TextBox.Text[i + 9] == '"' && TextBox.Text[i + 10] == '>' && TextBox.Text[i + 11] == '<' && TextBox.Text[i + 12] == 's' && TextBox.Text[i + 13] == 't' && TextBox.Text[i + 14] == 'r' && TextBox.Text[i + 15] == 'o' && TextBox.Text[i + 16] == 'n' && TextBox.Text[i + 17] == 'g' && TextBox.Text[i + 18] == '>')
+            //        {
+            //            CasesQuery.Text = null;
+            //            for (i = i + 9; TextBox.Text[i] != ' '; i++)
+            //            {
+            //                CasesQuery.Text = $"{CasesQuery.Text} {TextBox.Text[i]}";
+            //            }
+            //            NewDeaths2.Text = CasesQuery.Text;
+            //            CasesQuery.Text = null;//This is not displayed in the UI , i dont know why
+            //            break;
+            //        }
+            //    }
+            //    else if (TextBox.Text[i] == ' ')
+            //    {
+            //        CasesQuery.Text = null;
+            //    }
+            //}
+            //CasesQuery.Text = null;
+            //for (i = i + 1; i < l; i++)
+            //{
+            //    string temp;
+            //    CasesQuery.Text = $"{CasesQuery.Text}{TextBox.Text[i]}";
+            //    if (CasesQuery.Text == "data-date=")
+            //    {
+            //        if (TextBox.Text[i + 1] == '"')// && TextBox.Text[i + 2] == 's' && TextBox.Text[i + 3] == 't' && TextBox.Text[i + 4] == 'r' && TextBox.Text[i + 5] == 'o' && TextBox.Text[i + 6] == 'n' && TextBox.Text[i + 7] == 'g' && TextBox.Text[i + 8] == '>')// && TextBox.Text[i + 9] == '"' && TextBox.Text[i + 10] == '>' && TextBox.Text[i + 11] == '<' && TextBox.Text[i + 12] == 's' && TextBox.Text[i + 13] == 't' && TextBox.Text[i + 14] == 'r' && TextBox.Text[i + 15] == 'o' && TextBox.Text[i + 16] == 'n' && TextBox.Text[i + 17] == 'g' && TextBox.Text[i + 18] == '>')
+            //        {
+            //            CasesQuery.Text = null;
+            //            for (i = i + 2; TextBox.Text[i] != '"'; i++)
+            //            {
+            //                CasesQuery.Text = $"{CasesQuery.Text} {TextBox.Text[i]}";
+            //            }
+            //            temp = CasesQuery.Text;
+            //            CasesQuery.Text = null;
+            //            for (i = i + 2; TextBox.Text[i] != '&'; i++)
+            //            {
+            //                CasesQuery.Text = $"{CasesQuery.Text} {TextBox.Text[i]}";
+            //            }
+            //            MonthName3.Text = $"{temp}\n{CasesQuery.Text}";
+            //            CasesQuery.Text = null;
+            //            break;
+            //        }
+            //    }
+            //    else if (TextBox.Text[i] == ' ')
+            //    {
+            //        CasesQuery.Text = null;
+            //    }
+            //}
+            //for (i = i + 1; i < l; i++)
+            //{
+            //    CasesQuery.Text = $"{CasesQuery.Text}{TextBox.Text[i]}";
+            //    if (CasesQuery.Text == "class=")
+            //    {
+            //        if (TextBox.Text[i + 1] == '"' && TextBox.Text[i + 2] == 'n' && TextBox.Text[i + 3] == 'e' && TextBox.Text[i + 4] == 'w' && TextBox.Text[i + 5] == 's' && TextBox.Text[i + 6] == '_' && TextBox.Text[i + 7] == 'l' && TextBox.Text[i + 8] == 'i' && TextBox.Text[i + 9] == '"' && TextBox.Text[i + 10] == '>' && TextBox.Text[i + 11] == '<' && TextBox.Text[i + 12] == 's' && TextBox.Text[i + 13] == 't' && TextBox.Text[i + 14] == 'r' && TextBox.Text[i + 15] == 'o' && TextBox.Text[i + 16] == 'n' && TextBox.Text[i + 17] == 'g' && TextBox.Text[i + 18] == '>')
+            //        {
+            //            CasesQuery.Text = null;
+            //            for (i = i + 19; TextBox.Text[i] != ' '; i++)
+            //            {
+            //                CasesQuery.Text = $"{CasesQuery.Text} {TextBox.Text[i]}";
+            //            }
+            //            NewCases3.Text = CasesQuery.Text;
+            //            CasesQuery.Text = null;
+            //            break;
+            //        }
+            //    }
+            //    else if (TextBox.Text[i] == ' ')
+            //    {
+            //        CasesQuery.Text = null;
+            //    }
+            //}
+            //for (i = i + 1; i < l; i++)
+            //{
+            //    CasesQuery.Text = $"{CasesQuery.Text}{TextBox.Text[i]}";
+            //    if (CasesQuery.Text == "and ")
+            //    {
+            //        if (TextBox.Text[i + 1] == '<' && TextBox.Text[i + 2] == 's' && TextBox.Text[i + 3] == 't' && TextBox.Text[i + 4] == 'r' && TextBox.Text[i + 5] == 'o' && TextBox.Text[i + 6] == 'n' && TextBox.Text[i + 7] == 'g' && TextBox.Text[i + 8] == '>')// && TextBox.Text[i + 9] == '"' && TextBox.Text[i + 10] == '>' && TextBox.Text[i + 11] == '<' && TextBox.Text[i + 12] == 's' && TextBox.Text[i + 13] == 't' && TextBox.Text[i + 14] == 'r' && TextBox.Text[i + 15] == 'o' && TextBox.Text[i + 16] == 'n' && TextBox.Text[i + 17] == 'g' && TextBox.Text[i + 18] == '>')
+            //        {
+            //            CasesQuery.Text = null;
+            //            for (i = i + 9; TextBox.Text[i] != ' '; i++)
+            //            {
+            //                CasesQuery.Text = $"{CasesQuery.Text} {TextBox.Text[i]}";
+            //            }
+            //            NewDeaths3.Text = CasesQuery.Text;
+            //            CasesQuery.Text = null;//This is not displayed in the UI , i dont know why
+            //            break;
+            //        }
+            //    }
+            //    else if (TextBox.Text[i] == ' ')
+            //    {
+            //        CasesQuery.Text = null;
+            //    }
+            //}
+        }
+        private void India_MouseEnter(object sender, MouseEventArgs e)
+        {
+            India.Foreground = Brushes.DarkOrchid;
+        }
+        private void India_MouseLeave(object sender, MouseEventArgs e)
+        {
+            India.Foreground = Brushes.Orange;
+        }
+        private void OtherCountries_PreviewMouseDown(object sender, MouseButtonEventArgs e)
+        {
+            OtherCountries.Foreground = Brushes.Red;
+            OtherCountriesUnderLine.Visibility = Visibility.Visible;
+            GeneralInformation.Foreground = Brushes.Orange;
+            CurrentConditionsTextBlockUnderLine.Visibility = Visibility.Collapsed;
+            India.Foreground = Brushes.Orange;
+            IndiaUnderLine.Visibility = Visibility.Collapsed;
+        }
+        private void OtherCountries_MouseEnter(object sender, MouseEventArgs e)
+        {
+            OtherCountries.Foreground = Brushes.DarkOrchid;
+        }
+        private void OtherCountries_MouseLeave(object sender, MouseEventArgs e)
+        {
+            OtherCountries.Foreground = Brushes.Orange;
+        }
+    }
+}
